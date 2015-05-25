@@ -13,6 +13,11 @@
  * @link      http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
 
+/**
+ * The plugin version.
+ */
+define('FOTORAMA_VERSION', '@FOTORAMA_VERSION@');
+
  /**
   * Renders a gallery.
   *
