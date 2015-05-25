@@ -375,7 +375,7 @@ class Fotorama_Controller
      */
     protected function isValidName($name)
     {
-        return preg_match('/^[^a-z0-9-]+$/', $name);
+        return preg_match('/^[a-z0-9-]+$/', $name);
     }
 
     /**
