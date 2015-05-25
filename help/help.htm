@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>Fotorama_XH - Manual</title>
+<link rel="stylesheet" type="text/css" href="./stylesheet.css">
+</head>
+
+<body>
+
+<h1>Fotorama_XH - a CMSimple_XH Plugin</h1>
+<img src="../fotorama.png" style="float:left; margin-right:16px" alt="Image folder">
+<p>Fotorama_XH facilitates to embed <a href="http://fotorama.io/">Fotorama</a>
+galleries on CMSimple_XH pages.</p>
+
+<ul id="nav">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#installation">Installation</a></li>
+<!--<li><a href="#settings">Settings</a></li>-->
+<li><a href="#usage">Usage</a></li>
+<li><a href="#limitations">Limitations</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#credits">Credits</a></li>
+</ul>
+
+<div id="body">
+
+<p><strong>Please do read this documentation <em>before</em> you encounter any
+problems!</strong></p>
+
+<h2 id="requirements">Requirements</h2>
+<p>Pagemanager_XH is a plugin for CMSimple_XH &ge; 1.6. It requires PHP &ge;
+5.1.2.</p>
+<div class="toplink"><a href="#">back to top</a></div>
+
+<h2 id="installation">Installation</h2>
+<p>The installation is done as with many other CMSimple_XH plugins.
+See the <a href="http://www.cmsimple-xh.org/wiki/doku.php/installation">
+CMSimple_XH wiki</a> for further details.</p>
+<ol>
+<li>Backup the data on your server.</li>
+<li>Unzip the distribution on your computer.</li>
+<li>Upload the whole directory fotorama/ to your server into CMSimple_XH's
+plugins/ directory.</li>
+<!--<li>Set write permissions to the subdirectories css/, config/ und-->
+<!--languages/.</li>-->
+<!--<li>Browse to Fotorama's administration (Plugins &rarr; Fotorama), and-->
+<!--check if all requirements are fulfilled.</li>-->
+</ol>
+<div class="toplink"><a href="#">back to top</a></div>
+
+<!--<h2 id="settings">Settings</h2>-->
+<!--<p>The plugin's configuration is done as with many other CMSimple_XH plugins in-->
+<!--the website's back-end. Select "Fotorama" from "Plugins".</p>-->
+<!--<p>You can change the default settings of Fotorama_XH in "Config". Hints for the-->
+<!--options will be displayed when hovering over the help icon with your mouse.</p>-->
+<!--<p>Localization is done in "Language". You can translate the character strings-->
+<!--to your own language, if there is no appropriate language file available, or-->
+<!--customize them according to your needs.</p>-->
+<!--<p>The look of Fotorama_XH can be customized in "Stylesheet".</p>-->
+<!--<div class="toplink"><a href="#">back to top</a></div>-->
+
+<h2 id="usage">Usage</h2>
+<p>To embed a gallery on a page write:</p>
+<pre>{{{PLUGIN:fotorama('%NAME%');}}}</pre>
+<p>where %NAME% is the filename of the XML definition without the .xml
+extension.</p>
+<p>For example, if the file is called holidays.xml:</p>
+<pre>{{{PLUGIN:fotorama('holidays');}}}</pre>
+<div class="toplink"><a href="#">back to top</a></div>
+
+<h2 id="limitations">Limitations</h2>
+<p>If JavaScript is not available in the visitor's browser, only the first image
+of the gallery is displayed.</p>
+<div class="toplink"><a href="#">back to top</a></div>
+
+<h2 id="license">License</h2>
+<p>Fotorama_XH is licensed under
+<a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>.</p>
+<p>&copy; 2015 Christoph M. Becker</p>
+<div class="toplink"><a href="#">back to top</a></div>
+
+<h2 id="credits">Credits</h2>
+<p>This plugin is powered by <a href="http://fotorama.io/">Fotorama</a>. Many
+thanks to Artem Polikarpov, the developer of this library, for his great work,
+and for publishing it under MIT license.</p>
+<p>The plugin icon is designed by <a href="http://www.everaldo.com/">Everaldo
+Coelho</a>. Many thanks for publishing this icon under LGPL.</p>
+<!--<p>This plugin uses free applications icons from <a-->
+<!--href="http://www.aha-soft.com/">Aha-Soft</a>. Many thanks to making these icons-->
+<!--freely available.</p>-->
+<!--<p>Many thanks to the community at the <a-->
+<!--href="http://www.cmsimpleforum.com/">CMSimple_XH forum</a> for tips, suggestions-->
+<!--and testing.</p>-->
+<p>And last but not least many thanks to <a href="http://harteg.dk/">Peter
+Harteg</a>, the "father" of CMSimple, and all developers of <a
+href="http://www.cmsimple-xh.org/"> CMSimple_XH</a> without whom this amazing
+CMS wouldn't exist.</p>
+<div class="toplink"><a href="#">back to top</a></div>
+
+</div>
+
+</body>
+
+</html>
