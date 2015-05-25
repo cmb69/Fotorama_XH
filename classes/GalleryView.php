@@ -57,7 +57,7 @@ class Fotorama_GalleryView
         $this->emitJS();
         $html = $this->renderGalleryStartTag($gallery);
         foreach ($gallery->pic as $pic) {
-            $caption = isset($pic['caption']) ? $pic['caption'] : '';
+            $caption = XH_hsc(isset($pic['caption']) ? $pic['caption'] : '');
             $filename = $pth['folder']['images'] . $gallery['path'] . '/'
                 . $pic['path'];
             if (isset($gallery['nav'])) {
@@ -67,7 +67,8 @@ class Fotorama_GalleryView
                 $thumbnail = $filename;
             }
             $html .= tag(
-                'img src="' . $thumbnail . '" data-caption="' . $caption . '"'
+                'img src="' . $thumbnail . '" data-caption="' . $caption
+                . '" alt="' . $caption . '"'
             );
             if (isset($gallery['nav'])) {
                 $html .= '</a>';
