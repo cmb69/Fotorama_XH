@@ -34,7 +34,8 @@
     </target>
 
     <target name="unit-tests" description="runs all unit tests">
-        <phpunit bootstrap="tests/bootstrap.php" haltonerror="true" haltonfailure="true">
+        <phpunit bootstrap="classes/required_classes.php"
+                 haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>
                 <fileset refid="unit-tests"/>
@@ -61,7 +62,7 @@
                 <include name="*.php"/>
             </fileset>
         </coverage-setup>
-        <phpunit bootstrap="tests/bootstrap.php" codecoverage="true">
+        <phpunit bootstrap="classes/required_classes.php" codecoverage="true">
             <batchtest>
                 <fileset refid="unit-tests"/>
             </batchtest>
