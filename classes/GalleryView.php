@@ -57,9 +57,10 @@ class Fotorama_GalleryView
         $this->emitJS();
         $html = '<div class="fotorama">';
         foreach ($gallery->pic as $pic) {
+            $caption = isset($pic['caption']) ? $pic['caption'] : '';
             $html .= tag(
                 'img src="' . $pth['folder']['images'] . $gallery['path'] . '/'
-                . $pic['path'] . '"'
+                . $pic['path'] . '" data-caption="' . $caption . '"'
             );
         }
         $html .= '</div>';
