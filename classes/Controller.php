@@ -320,17 +320,18 @@ class Fotorama_Controller
      * @return string
      *
      * @global array  The paths of system files and folders.
+     * @global array  The configuration of the plugins.
      * @global array  The localization of the plugins.
      * @global string (X)HTML fragment to insert into the contents area.
      */
     protected function saveGallery()
     {
-        global $pth, $plugin_tx, $o;
+        global $pth, $plugin_cf, $plugin_tx, $o;
 
         $messages = '';
         $name = $this->sanitizeName($_POST['fotorama_gallery']);
         $text = $_POST['fotorama_text'];
-        if (!$this->validate($text)) {
+        if ($plugin_cf['fotorama']['xml_auto_validate'] && !$this->validate($text)) {
             $messages .= XH_message(
                 'warning', $plugin_tx['fotorama']['message_invalid_xml']
             );
