@@ -78,21 +78,13 @@ class Fotorama_Controller
         case 'plugin_main':
             switch ($action) {
             case 'create':
-                if ($this->createGallery()) {
-                    $o .= $this->renderGalleryEditor();
-                } else {
-                    $o .= $this->renderGalleryList();
-                }
+                $this->createGallery();
                 break;
             case 'edit':
                 $o .= $this->renderGalleryEditor();
                 break;
             case 'save':
-                if ($this->saveGallery()) {
-                    $o .= $this->renderGalleryList();
-                } else {
-                    $o .= $this->renderGalleryEditor();
-                }
+                $this->saveGallery();
                 break;
             default:
                 $o .= $this->renderGalleryList();
@@ -170,17 +162,59 @@ class Fotorama_Controller
             }
         }
         $html .= '</ul>'
-            . '<form action="' . $sn . '?&fotorama" method="post">'
+            . '<form action="' . $sn . '?&amp;fotorama" method="post">'
+            . '<fieldset><legend>' . $plugin_tx['fotorama']['label_create_gallery']
+            . '</legend>'
             . tag('input type="hidden" name="admin" value="plugin_main"')
             . '<p><label>' . $plugin_tx['fotorama']['label_name'] . ' '
             . tag('input type="text" name="fotorama_gallery"')
             . '</label></p>'
             . '<p><label>' . $plugin_tx['fotorama']['label_folder'] . ' '
-            . tag('input type="text" name="fotorama_folder"')
+            . $this->renderImageFolderSelect()
             . '</label></p>'
-            . '<button class="submit" name="action" value="create">'
-            . $plugin_tx['fotorama']['label_create'] . '</button>'
+            . '<p><button class="submit" name="action" value="create">'
+            . $plugin_tx['fotorama']['label_create'] . '</button></p>'
+            . '</fieldset>'
             . '</form>';
+        return $html;
+    }
+
+    /**
+     * Renders an image folder select element.
+     *
+     * @return string (X)HTML
+     *
+     * @global array The paths of system files and folders.
+     */
+    protected function renderImageFolderSelect()
+    {
+        global $pth;
+
+        return '<select name="fotorama_folder">'
+            . $this->renderImageFolderSelectOptions($pth['folder']['images'], '')
+            . '</select>';
+    }
+
+    /**
+     * Renders the select options of an image folder.
+     *
+     * @param string $path   A folder path.
+     * @param string $prefix A prefix.
+     *
+     * @return string (X)HTML
+     */
+    protected function renderImageFolderSelectOptions($path, $prefix)
+    {
+        $html = '';
+        $files = new DirectoryIterator($path);
+        foreach ($files as $file) {
+            if (!$file->isDot() && $file->isDir()) {
+                $html .= '<option>' . $prefix . $file->getFilename() . '</option>';
+                $html .= $this->renderImageFolderSelectOptions(
+                    $file->getPathname(), $prefix . $file->getFilename() . '/'
+                );
+            }
+        }
         return $html;
     }
 
@@ -206,7 +240,7 @@ class Fotorama_Controller
             $pth['folder']['content'] . 'fotorama/' . $name . '.xml'
         );
         return '<h1>Fotorama &ndash; "' . $name . '"</h1>'
-            . '<form action="' . $sn . '?&fotorama" method="post">'
+            . '<form action="' . $sn . '?&amp;fotorama" method="post">'
             . tag('input type="hidden" name="admin" value="plugin_main"')
             . tag(
                 'input type="hidden" name="fotorama_gallery" value="' . $name . '"'
@@ -219,50 +253,124 @@ class Fotorama_Controller
     }
 
     /**
-     * Creates a gallery and returns whether that succeeded.
+     * Creates a gallery.
      *
-     * @return bool
+     * @return void
      *
-     * @global array The paths of system files and folders.
+     * @global array  The paths of system files and folders.
+     * @global array  The localization of the plugins.
+     * @global string (X)HTML fragment to insert into the contents area.
      */
     protected function createGallery()
     {
-        global $pth;
+        global $pth, $plugin_tx, $o;
 
-        $name = $this->sanitizeName($_POST['fotorama_gallery']);
+        $messages = '';
+        $name = $_POST['fotorama_gallery'];
         $path = $_POST['fotorama_folder'];
+        $filename = $pth['folder']['images'] . $path;
         $xml = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' . PHP_EOL
-            . '<!DOCTYPE gallery SYSTEM "gallery.dtd">' . PHP_EOL
+            . '<!DOCTYPE gallery SYSTEM' . PHP_EOL
+            . '        "http://3-magi.net/userfiles/downloads/dtd/gallery.dtd">'
+            . PHP_EOL
             . '<gallery path="' . $path . '">' . PHP_EOL;
-        $files = new DirectoryIterator($pth['folder']['images'] . $path);
-        foreach ($files as $file) {
-            $filename = $file->getPathname();
-            if (is_file($filename) && getimagesize($filename)) {
-                $xml .= '    <pic path="' . $file->getFilename(). '"/>' . PHP_EOL;
+        if (is_dir($filename)) {
+            $files = new DirectoryIterator($filename);
+            foreach ($files as $file) {
+                $filename = $file->getPathname();
+                if (is_file($filename) && getimagesize($filename)) {
+                    $xml .= '    <pic path="' . $file->getFilename(). '"/>'
+                        . PHP_EOL;
+                }
             }
+        } else {
+            $messages .= XH_message(
+                'warning', $plugin_tx['fotorama']['message_no_folder'], $filename
+            );
         }
         $xml .= '</gallery>' . PHP_EOL;
-        return file_put_contents(
-            $pth['folder']['content'] . 'fotorama/' . $name . '.xml', $xml
-        );
+        if (!$this->isValidName($name)) {
+            $messages .= XH_message(
+                'fail', $plugin_tx['fotorama']['message_invalid_name'], $name
+            );
+        } else {
+            $filename = $pth['folder']['content'] . 'fotorama/' . $name . '.xml';
+            if (file_exists($filename)) {
+                $messages .= XH_message(
+                    'fail', $plugin_tx['fotorama']['message_exists'], $filename
+                );
+            } elseif (!file_put_contents($filename, $xml)) {
+                $messages .= XH_message(
+                    'fail', $plugin_tx['fotorama']['message_cant_save'], $filename
+                );
+            }
+        }
+        if (!$messages) {
+            $this->relocate(
+                '?&fotorama&admin=plugin_main&action=edit&fotorama_gallery=' . $name
+            );
+        } else {
+            $o .= $messages . $this->renderGalleryList();
+        }
     }
 
     /**
-     * Saves a gallery and returns whether that succeeded.
+     * Saves a gallery.
      *
-     * @return bool
+     * @return string
      *
-     * @global array The paths of system files and folders.
+     * @global array  The paths of system files and folders.
+     * @global array  The localization of the plugins.
+     * @global string (X)HTML fragment to insert into the contents area.
      */
     protected function saveGallery()
     {
-        global $pth;
+        global $pth, $plugin_tx, $o;
 
+        $messages = '';
         $name = $this->sanitizeName($_POST['fotorama_gallery']);
         $text = $_POST['fotorama_text'];
-        return file_put_contents(
-            $pth['folder']['content'] . 'fotorama/' . $name . '.xml', $text
-        );
+        if (!$this->validate($text)) {
+            $messages .= XH_message(
+                'warning', $plugin_tx['fotorama']['message_invalid_xml']
+            );
+        }
+        $filename = $pth['folder']['content'] . 'fotorama/' . $name . '.xml';
+        if (!file_put_contents($filename, $text)) {
+            $messages .= XH_message(
+                'fail', $plugin_tx['fotorama']['message_cant_save'], $filename
+            );
+        }
+        if (!$messages) {
+            $this->relocate('?&fotorama&admin=plugin_main&action=plugin_text');
+        } else {
+            $o .= $messages . $this->renderGalleryEditor();
+        }
+    }
+
+    /**
+     * Validates the given XML.
+     *
+     * @param string $xml An XML string.
+     *
+     * @return bool
+     */
+    protected function validate($xml)
+    {
+        $doc = new DomDocument();
+        return $doc->loadXML($xml) && $doc->validate();
+    }
+
+    /**
+     * Returns whether a given name is a valid gallery name.
+     *
+     * @param string $name A gallery name.
+     *
+     * @return bool
+     */
+    protected function isValidName($name)
+    {
+        return preg_match('/^[^a-z0-9-]+$/', $name);
     }
 
     /**
@@ -275,6 +383,19 @@ class Fotorama_Controller
     protected function sanitizeName($name)
     {
         return preg_replace('/[^a-z0-9-]/', '', $name);
+    }
+
+    /**
+     * Sends a relocation header.
+     *
+     * @param string $url An URL to relocate to.
+     *
+     * @return void
+     */
+    protected function relocate($url)
+    {
+        header('Location: ' . CMSIMPLE_URL . $url);
+        exit();
     }
 }
 
