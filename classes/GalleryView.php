@@ -55,23 +55,7 @@ class Fotorama_GalleryView
         $path = $pth['folder']['content'] . 'fotorama/' . $this->name . '.xml';
         $gallery = simplexml_load_file($path);
         $this->emitJS();
-        $html = '<div class="fotorama"';
-        if (isset($gallery['width'])) {
-            $html .= ' data-width="' . $gallery['width'] . '"';
-        }
-        if (isset($gallery['ratio'])) {
-            $html .= ' data-ratio="' . $gallery['ratio'] . '"';
-        }
-        if (isset($gallery['nav'])) {
-            $html .= ' data-nav="thumbs"';
-        }
-        if (isset($gallery['fullscreen'])) {
-            $html .= ' data-allowfullscreen="' . $gallery['fullscreen'] . '"';
-        }
-        if (isset($gallery['transition'])) {
-            $html .= ' data-transition="' . $gallery['transition'] . '"';
-        }
-        $html .= '>';
+        $html = $this->renderGalleryStartTag($gallery);
         foreach ($gallery->pic as $pic) {
             $caption = isset($pic['caption']) ? $pic['caption'] : '';
             $filename = $pth['folder']['images'] . $gallery['path'] . '/'
@@ -90,6 +74,35 @@ class Fotorama_GalleryView
             }
         }
         $html .= '</div>';
+        return $html;
+    }
+
+    /**
+     * Renders the start tag of a gallery.
+     *
+     * @param SimpleXMLElement $gallery A gallery.
+     *
+     * @return string (X)HTML
+     */
+    protected function renderGalleryStartTag(SimpleXMLElement $gallery)
+    {
+        $html = '<div class="fotorama"';
+        if (isset($gallery['width'])) {
+            $html .= ' data-width="' . $gallery['width'] . '"';
+        }
+        if (isset($gallery['ratio'])) {
+            $html .= ' data-ratio="' . $gallery['ratio'] . '"';
+        }
+        if (isset($gallery['nav'])) {
+            $html .= ' data-nav="thumbs"';
+        }
+        if (isset($gallery['fullscreen'])) {
+            $html .= ' data-allowfullscreen="' . $gallery['fullscreen'] . '"';
+        }
+        if (isset($gallery['transition'])) {
+            $html .= ' data-transition="' . $gallery['transition'] . '"';
+        }
+        $html .= '>';
         return $html;
     }
 
