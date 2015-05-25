@@ -31,4 +31,7 @@ function fotorama($name)
     return $view->render();
 }
 
+$temp = new Fotorama_Controller();
+$temp->dispatch();
+
 ?>
