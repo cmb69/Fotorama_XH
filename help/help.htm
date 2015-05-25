@@ -12,7 +12,10 @@
 <h1>Fotorama_XH - a CMSimple_XH Plugin</h1>
 <img src="../fotorama.png" style="float:left; margin-right:16px" alt="Image folder">
 <p>Fotorama_XH facilitates to embed <a href="http://fotorama.io/">Fotorama</a>
-galleries on CMSimple_XH pages.</p>
+galleries on CMSimple_XH pages. The plugin doesn't offer any image upload
+facility, but instead uses images from CMSimple_XH's images folder (only JPEG
+are supported for now). Every gallery can have its own settings, and every image
+can have an additional caption.</p>
 
 <ul id="nav">
 <li><a href="#notice">Important Notice</a></li>
@@ -35,14 +38,14 @@ galleries on CMSimple_XH pages.</p>
 <p><strong>Please do read this documentation <em>before</em> you encounter any
 problems!</strong></p>
 
-<h2>Important Notice</h2>
+<h2 id="notice">Important Notice</h2>
 <p><strong>Fotorama_XH hasn't been tested so far in various environments. It is
 a so called alpha version. Use with caution!</strong></p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2 id="requirements">Requirements</h2>
 <p>Fotorama_XH is a plugin for CMSimple_XH &ge; 1.6. It requires PHP &ge;
-5.2.2.</p>
+5.1.2.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2 id="installation">Installation</h2>
@@ -73,19 +76,15 @@ customize them according to your needs.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2 id="usage">Usage</h2>
-<p>Fotorama_XH galleries consist of images (currently only JPEG is fully
-supported) in a single folder. The details for the gallery have to specified in
-an XML file.</p>
-<div class="toplink"><a href="#">back to top</a></div>
 
 <h3 id="usage-preparation">Prepare a gallery</h3>
 <p>At first you have to upload some images into a subfolder of CMSimple_XH's
 image folder. You can either use CMSimple_XH's filebrowser or your favorite FTP
-client. Then you have to create the gallery XML file in the back-end. Navigate
-to Plugins &rarr; Fotorama &rarr; Galleries and use the form to create an
-initial XML file with all images of the chosen folder. The name of the gallery
-may only contain lower case Roman characters (a-z), Arabic digits (0-9) and
-hyphens (-). The name of the gallery will be used as filename (.xml is
+client. Then you have to create the gallery definition XML file in the back-end.
+Navigate to Plugins &rarr; Fotorama &rarr; Galleries and use the form to create
+an initial XML file with all images of the chosen folder. The name of the
+gallery may only contain lower case Roman characters (a-z), Arabic digits (0-9)
+and hyphens (-). The name of the gallery will be used as filename (.xml is
 appended), and the file is stored in CMSimple_XH's content folder. Each language
 has its own set of gallery definition files, so you can localize the image
 captions.</p>
