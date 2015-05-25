@@ -156,7 +156,7 @@ class Fotorama_Controller
         foreach ($files as $file) {
             $filename = $file->getFilename();
             if (pathinfo($filename, PATHINFO_EXTENSION) == 'xml') {
-                $basename = $file->getBasename('.xml');
+                $basename = basename($filename, '.xml');
                 $html .= '<li><a href="' . XH_hsc($url . $basename) . '">'
                     . $basename . '</a></li>';
             }
