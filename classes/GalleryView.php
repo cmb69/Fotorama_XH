@@ -55,13 +55,25 @@ class Fotorama_GalleryView
         $path = $pth['folder']['content'] . 'fotorama/' . $this->name . '.xml';
         $gallery = simplexml_load_file($path);
         $this->emitJS();
-        $html = '<div class="fotorama">';
+        $html = '<div class="fotorama"';
+        if (isset($gallery['nav'])) {
+            $html .= ' data-nav="thumbs"';
+        }
+        $html .= '>';
         foreach ($gallery->pic as $pic) {
             $caption = isset($pic['caption']) ? $pic['caption'] : '';
+            $filename = $pth['folder']['images'] . $gallery['path'] . '/'
+                . $pic['path'];
+            if (isset($gallery['nav'])) {
+                $html .= '<a href="' . $filename . '">';
+            }
             $html .= tag(
-                'img src="' . $pth['folder']['images'] . $gallery['path'] . '/'
-                . $pic['path'] . '" data-caption="' . $caption . '"'
+                'img src="' . $this->makeThumbnail($filename, 64)
+                . '" data-caption="' . $caption . '"'
             );
+            if (isset($gallery['nav'])) {
+                $html .= '</a>';
+            }
         }
         $html .= '</div>';
         return $html;
@@ -88,6 +100,43 @@ class Fotorama_GalleryView
         include_jqueryplugin(
             'fotorama', $pth['folder']['plugins'] . 'fotorama/lib/fotorama.js'
         );
+    }
+
+    /**
+     * Creates a cached thumbnail if necessary, and returns its path.
+     *
+     * @param string $path A file path.
+     * @param int    $size A minimum size in pixels.
+     *
+     * @return string
+     *
+     * @global array The paths of system files and folders.
+     */
+    protected function makeThumbnail($path, $size)
+    {
+        global $pth;
+
+        $md5 = md5($path);
+        $thumb = $pth['folder']['plugins'] . 'fotorama/cache/'
+            . "{$md5}_{$size}.jpg";
+        if (!file_exists($thumb) || filemtime($thumb) < filemtime($path)) {
+            $source = imagecreatefromjpeg($path);
+            $w1 = imagesx($source);
+            $h1 = imagesy($source);
+            if ($w1 < $h1) {
+                $w2 = $size;
+                $h2 = $w2 / $w1 * $h1;
+            } else {
+                $h2 = $size;
+                $w2 = $h2 / $h1 * $w1;
+            }
+            $dest = imagecreatetruecolor($w2, $h2);
+            imagecopyresampled($dest, $source, 0, 0, 0, 0, $w2, $h2, $w1, $h1);
+            imagejpeg($dest, $thumb);
+            imagedestroy($source);
+            imagedestroy($dest);
+        }
+        return $thumb;
     }
 }
 
