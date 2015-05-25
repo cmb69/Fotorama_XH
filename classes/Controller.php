@@ -141,19 +141,18 @@ class Fotorama_Controller
      * @return string
      *
      * @global string            The script name.
-     * @global array             The paths of system files and folders.
      * @global array             The localization of the plugins.
      * @global XH_CSRFProtection The CSRF protector.
      */
     protected function renderGalleryList()
     {
-        global $sn, $pth, $plugin_tx, $_XH_csrfProtection;
+        global $sn, $plugin_tx, $_XH_csrfProtection;
 
         $url = $sn . '?&fotorama&admin=plugin_main&action=edit&fotorama_gallery=';
         $html = '<h1>Fotorama &ndash; ' . $plugin_tx['fotorama']['menu_main']
             . '</h1>'
             . '<ul>';
-        $files = new DirectoryIterator($pth['folder']['content'] . 'fotorama');
+        $files = new DirectoryIterator($this->findContentFolder());
         foreach ($files as $file) {
             $filename = $file->getFilename();
             if (pathinfo($filename, PATHINFO_EXTENSION) == 'xml') {
@@ -226,22 +225,19 @@ class Fotorama_Controller
      * @return string
      *
      * @global string The script name.
-     * @global array  The paths of system files and folders.
      * @global array  The localization of the plugins.
      * @global XH_CSRFProtection The CSRF protector.
      */
     protected function renderGalleryEditor()
     {
-        global $sn, $pth, $plugin_tx, $_XH_csrfProtection;
+        global $sn, $plugin_tx, $_XH_csrfProtection;
 
         if (isset($_GET['fotorama_gallery'])) {
             $name = $this->sanitizeName($_GET['fotorama_gallery']);
         } else {
             $name = $this->sanitizeName($_POST['fotorama_gallery']);
         }
-        $contents = file_get_contents(
-            $pth['folder']['content'] . 'fotorama/' . $name . '.xml'
-        );
+        $contents = file_get_contents($this->findContentFolder() . $name . '.xml');
         return '<h1>Fotorama &ndash; "' . $name . '"</h1>'
             . '<form action="' . $sn . '?&amp;fotorama" method="post">'
             . $_XH_csrfProtection->tokenInput()
@@ -405,6 +401,26 @@ class Fotorama_Controller
     {
         header('Location: ' . CMSIMPLE_URL . $url);
         exit();
+    }
+
+    /**
+     * Returns the path of the content folder. If the folder does not exist, it
+     * is created.
+     *
+     * @return string
+     *
+     * @global array The paths of system files and folders.
+     */
+    protected function findContentFolder()
+    {
+        global $pth;
+
+        $folder = $pth['folder']['content'] . 'fotorama/';
+        if (!file_exists($folder)) {
+            mkdir($folder, 0777);
+            chmod($folder, 0777);
+        }
+        return $folder;
     }
 }
 
