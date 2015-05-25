@@ -43,9 +43,10 @@
         </phpunit>
     </target>
 
-<!--    <target name="attack-tests">
+    <target name="attack-tests" description="runs all attack tests">
         <fail unless="env.CMSIMPLEDIR" message="CMSIMPLEDIR undefined!"/>
-        <phpunit haltonerror="true" haltonfailure="true">
+        <phpunit bootstrap="classes/required_classes.php"
+                 haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>
                 <fileset dir="tests/attack">
@@ -54,7 +55,7 @@
             </batchtest>
         </phpunit>
     </target>
--->
+
     <target name="coverage" description="generates coverage report">
         <mkdir dir="tests/coverage"/>
         <coverage-setup database="tests/coverage/coverage.db">

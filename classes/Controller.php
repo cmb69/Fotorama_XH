@@ -140,13 +140,14 @@ class Fotorama_Controller
      *
      * @return string
      *
-     * @global string The script name.
-     * @global array  The paths of system files and folders.
-     * @global array  The localization of the plugins.
+     * @global string            The script name.
+     * @global array             The paths of system files and folders.
+     * @global array             The localization of the plugins.
+     * @global XH_CSRFProtection The CSRF protector.
      */
     protected function renderGalleryList()
     {
-        global $sn, $pth, $plugin_tx;
+        global $sn, $pth, $plugin_tx, $_XH_csrfProtection;
 
         $url = $sn . '?&fotorama&admin=plugin_main&action=edit&fotorama_gallery=';
         $html = '<h1>Fotorama &ndash; ' . $plugin_tx['fotorama']['menu_main']
@@ -163,9 +164,10 @@ class Fotorama_Controller
         }
         $html .= '</ul>'
             . '<form action="' . $sn . '?&amp;fotorama" method="post">'
+            . $_XH_csrfProtection->tokenInput()
+            . tag('input type="hidden" name="admin" value="plugin_main"')
             . '<fieldset><legend>' . $plugin_tx['fotorama']['label_create_gallery']
             . '</legend>'
-            . tag('input type="hidden" name="admin" value="plugin_main"')
             . '<p><label>' . $plugin_tx['fotorama']['label_name'] . ' '
             . tag('input type="text" name="fotorama_gallery"')
             . '</label></p>'
@@ -226,10 +228,11 @@ class Fotorama_Controller
      * @global string The script name.
      * @global array  The paths of system files and folders.
      * @global array  The localization of the plugins.
+     * @global XH_CSRFProtection The CSRF protector.
      */
     protected function renderGalleryEditor()
     {
-        global $sn, $pth, $plugin_tx;
+        global $sn, $pth, $plugin_tx, $_XH_csrfProtection;
 
         if (isset($_GET['fotorama_gallery'])) {
             $name = $this->sanitizeName($_GET['fotorama_gallery']);
@@ -241,6 +244,7 @@ class Fotorama_Controller
         );
         return '<h1>Fotorama &ndash; "' . $name . '"</h1>'
             . '<form action="' . $sn . '?&amp;fotorama" method="post">'
+            . $_XH_csrfProtection->tokenInput()
             . tag('input type="hidden" name="admin" value="plugin_main"')
             . tag(
                 'input type="hidden" name="fotorama_gallery" value="' . $name . '"'
@@ -257,14 +261,16 @@ class Fotorama_Controller
      *
      * @return void
      *
-     * @global array  The paths of system files and folders.
-     * @global array  The localization of the plugins.
-     * @global string (X)HTML fragment to insert into the contents area.
+     * @global array             The paths of system files and folders.
+     * @global array             The localization of the plugins.
+     * @global string            (X)HTML fragment to insert into the contents area.
+     * @global XH_CSRFProtection The CSRF protector.
      */
     protected function createGallery()
     {
-        global $pth, $plugin_tx, $o;
+        global $pth, $plugin_tx, $o, $_XH_csrfProtection;
 
+        $_XH_csrfProtection->check();
         $messages = '';
         $name = $_POST['fotorama_gallery'];
         $path = $_POST['fotorama_folder'];
@@ -322,12 +328,14 @@ class Fotorama_Controller
      * @global array  The paths of system files and folders.
      * @global array  The configuration of the plugins.
      * @global array  The localization of the plugins.
+     * @global XH_CSRFProtection The CSRF protector.
      * @global string (X)HTML fragment to insert into the contents area.
      */
     protected function saveGallery()
     {
-        global $pth, $plugin_cf, $plugin_tx, $o;
+        global $pth, $plugin_cf, $plugin_tx, $_XH_csrfProtection, $o;
 
+        $_XH_csrfProtection->check();
         $messages = '';
         $name = $this->sanitizeName($_POST['fotorama_gallery']);
         $text = $_POST['fotorama_text'];
