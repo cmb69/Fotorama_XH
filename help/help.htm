@@ -15,10 +15,16 @@
 galleries on CMSimple_XH pages.</p>
 
 <ul id="nav">
+<li><a href="#notice">Important Notice</a></li>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#installation">Installation</a></li>
-<!--<li><a href="#settings">Settings</a></li>-->
-<li><a href="#usage">Usage</a></li>
+<li><a href="#settings">Settings</a></li>
+<li><a href="#usage">Usage</a>
+<ul>
+<li><a href="#usage-preparation">Prepare a gallery</a></li>
+<li><a href="#usage-embedding">Embed a gallery</a></li>
+</ul>
+</li>
 <li><a href="#limitations">Limitations</a></li>
 <li><a href="#license">License</a></li>
 <li><a href="#credits">Credits</a></li>
@@ -29,8 +35,13 @@ galleries on CMSimple_XH pages.</p>
 <p><strong>Please do read this documentation <em>before</em> you encounter any
 problems!</strong></p>
 
+<h2>Important Notice</h2>
+<p><strong>Fotorama_XH hasn't been tested so far in various environments. It is
+a so called alpha version. Use with caution!</strong></p>
+<div class="toplink"><a href="#">back to top</a></div>
+
 <h2 id="requirements">Requirements</h2>
-<p>Pagemanager_XH is a plugin for CMSimple_XH &ge; 1.6. It requires PHP &ge;
+<p>Fotorama_XH is a plugin for CMSimple_XH &ge; 1.6. It requires PHP &ge;
 5.2.2.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
@@ -43,7 +54,8 @@ CMSimple_XH wiki</a> for further details.</p>
 <li>Unzip the distribution on your computer.</li>
 <li>Upload the whole directory fotorama/ to your server into CMSimple_XH's
 plugins/ directory.</li>
-<li>Set write permissions for the subdirectories css/ and languages/.</li>
+<li>Set write permissions for the subdirectories cache/, css/, config/ and
+languages/.</li>
 <!--<li>Browse to Fotorama's administration (Plugins &rarr; Fotorama), and-->
 <!--check if all requirements are fulfilled.</li>-->
 </ol>
@@ -52,8 +64,8 @@ plugins/ directory.</li>
 <h2 id="settings">Settings</h2>
 <p>The plugin's configuration is done as with many other CMSimple_XH plugins in
 the website's back-end. Select "Fotorama" from "Plugins".</p>
-<!--<p>You can change the default settings of Fotorama_XH in "Config". Hints for the-->
-<!--options will be displayed when hovering over the help icon with your mouse.</p>-->
+<p>You can change the default settings of Fotorama_XH in "Config". Hints for the
+options will be displayed when hovering over the help icon with your mouse.</p>
 <p>Localization is done in "Language". You can translate the character strings
 to your own language, if there is no appropriate language file available, or
 customize them according to your needs.</p>
@@ -61,17 +73,64 @@ customize them according to your needs.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2 id="usage">Usage</h2>
-<p>To embed a gallery on a page write:</p>
+<p>Fotorama_XH galleries consist of images (currently only JPEG is fully
+supported) in a single folder. The details for the gallery have to specified in
+an XML file.</p>
+<div class="toplink"><a href="#">back to top</a></div>
+
+<h3 id="usage-preparation">Prepare a gallery</h3>
+<p>At first you have to upload some images into a subfolder of CMSimple_XH's
+image folder. You can either use CMSimple_XH's filebrowser or your favorite FTP
+client. Then you have to create the gallery XML file in the back-end. Navigate
+to Plugins &rarr; Fotorama &rarr; Galleries and use the form to create an
+initial XML file with all images of the chosen folder. The name of the gallery
+may only contain lower case Roman characters (a-z), Arabic digits (0-9) and
+hyphens (-). The name of the gallery will be used as filename (.xml is
+appended), and the file is stored in CMSimple_XH's content folder. Each language
+has its own set of gallery definition files, so you can localize the image
+captions.</p>
+<p>After having successfully created the XML file, you are redirected to the
+gallery editor where you can fine-tune the gallery by editing the XML file. You
+can remove and add &lt;pic&gt; elements, and reorder them. For every &lt;pic&gt;
+element you can optionally specify a caption attribute whose value will be shown
+in the gallery. You can change the value of the path attribute, but you must not
+remove the attribute completely. Note that you should not touch the first three
+lines of the file (the XML and the doctype declaration).</p>
+<p>Furthermore you can specify additional attributes (the path attribute is
+mandatory again) for the &lt;gallery&gt; element which affect the functionality
+and look-and-feel of the gallery. The following attributes are supported:</p>
+<dl>
+<dt>nav</dt>
+<dd>Only "thumbs" is allowed if the attribute is specified. This will turn the
+slim "dot" navigation into a thumbnail navigation. The required thumbnails are
+automatically generated on the fly, and stored in the plugin's cache
+directory.</dd>
+<dt>fullscreen</dt>
+<dd>This allows the visitor to enter fullscreen mode. Choose either "true", what
+will restrict the fullscreen mode to the browser window, but also works for
+older browsers, or "native" what uses the full screen size if supported by the
+browser.</dd>
+<dt>transition</dt>
+<dd>Either "slide" (the default if the attribute is omitted), "crossfade" or
+"dissolve". The latter is probably only useful if you have images that differ
+only slightly; otherwise "crossfade" is preferable.</dd>
+</dl>
+<p>When the file is saved, it is automatically validated against the DTD. That
+does not work if your working offline or if the PHP DOM extension is not
+available; in this case you can disable the automatic validation in the plugin
+configuration.</p>
+<div class="toplink"><a href="#">back to top</a></div>
+
+<h3 id="usage-embedding">Embed a gallery</h3>
+<p>To embed a gallery on a page simply write:</p>
 <pre>{{{PLUGIN:fotorama('%NAME%');}}}</pre>
-<p>where %NAME% is the filename of the XML definition without the .xml
-extension.</p>
-<p>For example, if the file is called holidays.xml:</p>
+<p>where %NAME% is the name of the gallery, e.g.</p>
 <pre>{{{PLUGIN:fotorama('holidays');}}}</pre>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2 id="limitations">Limitations</h2>
-<p>If JavaScript is not available in the visitor's browser, only the first image
-of the gallery is displayed.</p>
+<p>For the galleries to be <em>fully</em> functional, JavaScript has to be
+enabled in the visitor's browser.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2 id="license">License</h2>
