@@ -56,6 +56,12 @@ class Fotorama_GalleryView
         $gallery = simplexml_load_file($path);
         $this->emitJS();
         $html = '<div class="fotorama"';
+        if (isset($gallery['width'])) {
+            $html .= ' data-width="' . $gallery['width'] . '"';
+        }
+        if (isset($gallery['ratio'])) {
+            $html .= ' data-ratio="' . $gallery['ratio'] . '"';
+        }
         if (isset($gallery['nav'])) {
             $html .= ' data-nav="thumbs"';
         }

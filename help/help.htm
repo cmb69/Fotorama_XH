@@ -100,6 +100,16 @@ lines of the file (the XML and the doctype declaration).</p>
 mandatory again) for the &lt;gallery&gt; element which affect the functionality
 and look-and-feel of the gallery. The following attributes are supported:</p>
 <dl>
+<dt>width and ration</dt>
+<dd>These attributes specify the width and aspect ratio of the gallery,
+respectively. The width is either a plain number giving the width in pixels
+(e.g. "400") or a percentage of the available horizontal space (e.g. "100%"),
+which is especially useful for responsive layouts. The ratio is either a
+fraction (e.g. 400/300 or 16/9) or a decimal numer (e.g. 1.3333). If these
+attributes are omitted, the width and aspect ratio are determined by the first
+image. Note that the images will be resized to fit within the width/ratio, so
+that it's possible to have portrait and landscape images mixed in the same
+gallery without distortion.</dd>
 <dt>nav</dt>
 <dd>Only "thumbs" is allowed if the attribute is specified. This will turn the
 slim "dot" navigation into a thumbnail navigation. The required thumbnails are

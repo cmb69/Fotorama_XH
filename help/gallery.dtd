@@ -1,6 +1,8 @@
 <!ELEMENT gallery (pic)*>
 <!ATTLIST gallery
     path       CDATA                      #REQUIRED
+    width      CDATA                      #IMPLIED
+    ratio      CDATA                      #IMPLIED
     nav        (thumbs)                   #IMPLIED
     fullscreen (true|native)              #IMPLIED
     transition (slide|crossfade|dissolve) #IMPLIED>
