@@ -59,6 +59,9 @@ class Fotorama_GalleryView
         if (isset($gallery['nav'])) {
             $html .= ' data-nav="thumbs"';
         }
+        if (isset($gallery['fullscreen'])) {
+            $html .= ' data-allowfullscreen="' . $gallery['fullscreen'] . '"';
+        }
         $html .= '>';
         foreach ($gallery->pic as $pic) {
             $caption = isset($pic['caption']) ? $pic['caption'] : '';
