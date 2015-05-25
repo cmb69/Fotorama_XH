@@ -46,7 +46,7 @@ class Fotorama_GalleryView
      *
      * @return string (X)HTML
      *
-     * @global array  The paths of system files and folders.
+     * @global array The paths of system files and folders.
      */
     public function render()
     {
@@ -65,11 +65,13 @@ class Fotorama_GalleryView
             $filename = $pth['folder']['images'] . $gallery['path'] . '/'
                 . $pic['path'];
             if (isset($gallery['nav'])) {
+                $thumbnail = $this->makeThumbnail($filename, 64);
                 $html .= '<a href="' . $filename . '">';
+            } else {
+                $thumbnail = $filename;
             }
             $html .= tag(
-                'img src="' . $this->makeThumbnail($filename, 64)
-                . '" data-caption="' . $caption . '"'
+                'img src="' . $thumbnail . '" data-caption="' . $caption . '"'
             );
             if (isset($gallery['nav'])) {
                 $html .= '</a>';
