@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
 
+namespace Fotorama;
+
 /**
  * The gallery list commands.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
-class Fotorama_GalleryListCommand extends Fotorama_Command
+class GalleryListCommand extends Command
 {
     /**
      * Renders the gallery list.
@@ -41,7 +43,7 @@ class Fotorama_GalleryListCommand extends Fotorama_Command
         $html = '<h1>Fotorama &ndash; ' . $plugin_tx['fotorama']['menu_main']
             . '</h1>'
             . '<ul>';
-        $files = new DirectoryIterator($this->findContentFolder());
+        $files = new \DirectoryIterator($this->findContentFolder());
         foreach ($files as $file) {
             $filename = $file->getFilename();
             if (pathinfo($filename, PATHINFO_EXTENSION) == 'xml') {
@@ -96,7 +98,7 @@ class Fotorama_GalleryListCommand extends Fotorama_Command
     protected function renderImageFolderSelectOptions($path, $prefix)
     {
         $html = '';
-        $files = new DirectoryIterator($path);
+        $files = new \DirectoryIterator($path);
         foreach ($files as $file) {
             if (!$file->isDot() && $file->isDir()) {
                 $html .= '<option>' . $prefix . $file->getFilename() . '</option>';

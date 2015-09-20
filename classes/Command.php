@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
 
+namespace Fotorama;
+
 /**
  * The commands.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
-abstract class Fotorama_Command
+abstract class Command
 {
     /**
      * Returns the path of the content folder. If the folder does not exist, it
@@ -60,11 +62,11 @@ abstract class Fotorama_Command
     /**
      * Returns the output of a command.
      *
-     * @param Fotorama_Command $command A command.
+     * @param Command $command A command.
      *
      * @return string HTML.
      */     
-    protected function render(Fotorama_Command $command)
+    protected function render(Command $command)
     {
         ob_start();
         $command->execute();

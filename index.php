@@ -27,11 +27,11 @@ define('FOTORAMA_VERSION', '@FOTORAMA_VERSION@');
   */
 function fotorama($name)
 {
-    $view = new Fotorama_GalleryView($name);
+    $view = new Fotorama\GalleryView($name);
     return $view->render();
 }
 
-$temp = new Fotorama_Controller();
+$temp = new Fotorama\Controller();
 $temp->dispatch();
 
 ?>

@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
 
+namespace Fotorama;
+
 /**
  * The create gallery commands.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
-class Fotorama_CreateGalleryCommand extends Fotorama_Command
+class CreateGalleryCommand extends Command
 {
     /**
      * Creates a gallery.
@@ -49,7 +51,7 @@ class Fotorama_CreateGalleryCommand extends Fotorama_Command
             . PHP_EOL
             . '<gallery path="' . $path . '">' . PHP_EOL;
         if (is_dir($filename)) {
-            $files = new DirectoryIterator($filename);
+            $files = new \DirectoryIterator($filename);
             foreach ($files as $file) {
                 $filename = $file->getPathname();
                 if (is_file($filename) && getimagesize($filename)) {
@@ -84,7 +86,7 @@ class Fotorama_CreateGalleryCommand extends Fotorama_Command
                 '?&fotorama&admin=plugin_main&action=edit&fotorama_gallery=' . $name
             );
         } else {
-            $o .= $messages . $this->render(new Fotorama_GalleryListCommand());
+            $o .= $messages . $this->render(new GalleryListCommand());
         }
     }
 

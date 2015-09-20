@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
 
+namespace Fotorama;
+
 /**
  * The plugin controllers.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
-class Fotorama_Controller
+class Controller
 {
     /**
      * Dispatches on plugin related requests.
@@ -73,7 +75,7 @@ class Fotorama_Controller
         $o .= print_plugin_admin('on');
         switch ($admin) {
         case '':
-            $o .= $this->render(new Fotorama_PluginInfoCommand());
+            $o .= $this->render(new PluginInfoCommand());
             break;
         case 'plugin_main':
             $this->handleMainAction();
@@ -97,24 +99,24 @@ class Fotorama_Controller
             $this->createGallery();
             break;
         case 'edit':
-            $o .= $this->render(new Fotorama_GalleryEditorCommand());
+            $o .= $this->render(new GalleryEditorCommand());
             break;
         case 'save':
             $this->saveGallery();
             break;
         default:
-            $o .= $this->render(new Fotorama_GalleryListCommand());
+            $o .= $this->render(new GalleryListCommand());
         }
     }
 
     /**
      * Returns the output of a command.
      *
-     * @param Fotorama_Command $command A command.
+     * @param Command $command A command.
      *
      * @return string HTML.
      */     
-    protected function render(Fotorama_Command $command)
+    protected function render(Command $command)
     {
         ob_start();
         $command->execute();
@@ -128,7 +130,7 @@ class Fotorama_Controller
      */
     protected function createGallery()
     {
-        (new Fotorama_CreateGalleryCommand())->execute();
+        (new CreateGalleryCommand())->execute();
     }
 
     /**
@@ -138,7 +140,7 @@ class Fotorama_Controller
      */
     protected function saveGallery()
     {
-        $command = new Fotorama_SaveGalleryCommand();
+        $command = new SaveGalleryCommand();
         $command->execute();
     }
 }

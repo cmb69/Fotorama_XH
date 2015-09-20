@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
 
+namespace Fotorama;
+
 /**
  * The save gallery commands.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
-class Fotorama_SaveGalleryCommand extends Fotorama_Command
+class SaveGalleryCommand extends Command
 {
     /**
      * Saves a gallery.
@@ -57,7 +59,7 @@ class Fotorama_SaveGalleryCommand extends Fotorama_Command
         if (!$messages) {
             $this->relocate('?&fotorama&admin=plugin_main&action=plugin_text');
         } else {
-            $o .= $messages . $this->render(new Fotorama_GalleryEditorCommand());
+            $o .= $messages . $this->render(new GalleryEditorCommand());
         }
     }
 
@@ -70,7 +72,7 @@ class Fotorama_SaveGalleryCommand extends Fotorama_Command
      */
     protected function validate($xml)
     {
-        $doc = new DomDocument();
+        $doc = new \DomDocument();
         return $doc->loadXML($xml) && $doc->validate();
     }
 }
