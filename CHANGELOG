@@ -1,2 +1,11 @@
+Version 1.0beta1 - released 2016-05-27
+* lifted PHP requirement to 5.3.0
+* added PHP finfo extension requirement
+* fixed bug where non existing gallery caused crash
+* fixed bug where captions weren't shown in thumbnail nav mode
+* fixed bug where magic_quotes_gpc=On caused malfunctions
+* updated to Fotorama 4.6.4
+* added German localization and manual
+
 Version 1.0alpha1 - released 2015-05-26
 * initial release
