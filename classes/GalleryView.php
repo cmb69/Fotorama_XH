@@ -69,7 +69,7 @@ class GalleryView
                 . $pic['path'];
             if (isset($gallery['nav'])) {
                 $thumbnail = $this->makeThumbnail($filename, 64);
-                $html .= '<a href="' . $filename . '">';
+                $html .= "<a href=\"$filename\" data-caption=\"$caption\">";
             } else {
                 $thumbnail = $filename;
             }
