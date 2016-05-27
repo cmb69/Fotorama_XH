@@ -52,9 +52,14 @@ class GalleryView
      */
     public function render()
     {
-        global $pth;
+        global $pth, $plugin_tx;
 
         $service = new GalleryService();
+        if (!$service->hasGallery($this->name)) {
+            return XH_message(
+                'fail', $plugin_tx['fotorama']['message_no_gallery'], $this->name
+            );
+        }
         $gallery = $service->findGallery($this->name);
         $this->emitJS();
         $html = $this->renderGalleryStartTag($gallery);
