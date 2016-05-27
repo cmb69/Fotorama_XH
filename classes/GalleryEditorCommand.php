@@ -40,9 +40,9 @@ class GalleryEditorCommand extends Command
         global $sn, $plugin_tx, $_XH_csrfProtection;
 
         if (isset($_GET['fotorama_gallery'])) {
-            $name = $this->sanitizeName($_GET['fotorama_gallery']);
+            $name = $this->sanitizeName(stsl($_GET['fotorama_gallery']));
         } else {
-            $name = $this->sanitizeName($_POST['fotorama_gallery']);
+            $name = $this->sanitizeName(stsl($_POST['fotorama_gallery']));
         }
         $service = new GalleryService();
         $contents = $service->findGalleryXML($name);

@@ -42,8 +42,8 @@ class SaveGalleryCommand extends Command
 
         $_XH_csrfProtection->check();
         $messages = '';
-        $name = $this->sanitizeName($_POST['fotorama_gallery']);
-        $text = $_POST['fotorama_text'];
+        $name = $this->sanitizeName(stsl($_POST['fotorama_gallery']));
+        $text = stsl($_POST['fotorama_text']);
         if ($plugin_cf['fotorama']['xml_auto_validate'] && !$this->validate($text)) {
             $messages .= XH_message(
                 'warning', $plugin_tx['fotorama']['message_invalid_xml']
