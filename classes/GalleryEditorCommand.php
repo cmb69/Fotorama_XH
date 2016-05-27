@@ -44,7 +44,8 @@ class GalleryEditorCommand extends Command
         } else {
             $name = $this->sanitizeName($_POST['fotorama_gallery']);
         }
-        $contents = file_get_contents($this->findContentFolder() . $name . '.xml');
+        $service = new GalleryService();
+        $contents = $service->findGalleryXML($name);
         echo '<h1>Fotorama &ndash; "' . $name . '"</h1>'
             . '<form action="' . $sn . '?&amp;fotorama" method="post">'
             . $_XH_csrfProtection->tokenInput()

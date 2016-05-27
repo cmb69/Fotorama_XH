@@ -43,14 +43,11 @@ class GalleryListCommand extends Command
         $html = '<h1>Fotorama &ndash; ' . $plugin_tx['fotorama']['menu_main']
             . '</h1>'
             . '<ul>';
-        $files = new \DirectoryIterator($this->findContentFolder());
-        foreach ($files as $file) {
-            $filename = $file->getFilename();
-            if (pathinfo($filename, PATHINFO_EXTENSION) == 'xml') {
-                $basename = basename($filename, '.xml');
-                $html .= '<li><a href="' . XH_hsc($url . $basename) . '">'
-                    . $basename . '</a></li>';
-            }
+        $service = new GalleryService();
+        foreach ($service->findAllGalleries() as $gallery) {
+            $html .= '<li><a href="' . XH_hsc($url . $gallery) . '">'
+                . $gallery . '</a></li>';
+            
         }
         $html .= '</ul>'
             . '<form action="' . $sn . '?&amp;fotorama" method="post">'
@@ -75,37 +72,25 @@ class GalleryListCommand extends Command
      * Renders an image folder select element.
      *
      * @return string (X)HTML
-     *
-     * @global array The paths of system files and folders.
      */
     protected function renderImageFolderSelect()
     {
-        global $pth;
-
         return '<select name="fotorama_folder">'
-            . $this->renderImageFolderSelectOptions($pth['folder']['images'], '')
+            . $this->renderImageFolderSelectOptions()
             . '</select>';
     }
 
     /**
      * Renders the select options of an image folder.
      *
-     * @param string $path   A folder path.
-     * @param string $prefix A prefix.
-     *
      * @return string (X)HTML
      */
-    protected function renderImageFolderSelectOptions($path, $prefix)
+    protected function renderImageFolderSelectOptions()
     {
         $html = '';
-        $files = new \DirectoryIterator($path);
-        foreach ($files as $file) {
-            if (!$file->isDot() && $file->isDir()) {
-                $html .= '<option>' . $prefix . $file->getFilename() . '</option>';
-                $html .= $this->renderImageFolderSelectOptions(
-                    $file->getPathname(), $prefix . $file->getFilename() . '/'
-                );
-            }
+        $service = new GalleryService();
+        foreach ($service->findImageFolders() as $folder) {
+            $html .= '<option>' . $folder . '</option>';
         }
         return $html;
     }

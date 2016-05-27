@@ -31,7 +31,6 @@ class SaveGalleryCommand extends Command
      *
      * @return void
      *
-     * @global array  The paths of system files and folders.
      * @global array  The configuration of the plugins.
      * @global array  The localization of the plugins.
      * @global XH_CSRFProtection The CSRF protector.
@@ -39,7 +38,7 @@ class SaveGalleryCommand extends Command
      */
     public function execute()
     {
-        global $pth, $plugin_cf, $plugin_tx, $_XH_csrfProtection, $o;
+        global $plugin_cf, $plugin_tx, $_XH_csrfProtection, $o;
 
         $_XH_csrfProtection->check();
         $messages = '';
@@ -50,10 +49,12 @@ class SaveGalleryCommand extends Command
                 'warning', $plugin_tx['fotorama']['message_invalid_xml']
             );
         }
-        $filename = $pth['folder']['content'] . 'fotorama/' . $name . '.xml';
-        if (!file_put_contents($filename, $text)) {
+        $service = new GalleryService();
+        if (!$service->saveGalleryXML($name, $text)) {
             $messages .= XH_message(
-                'fail', $plugin_tx['fotorama']['message_cant_save'], $filename
+                'fail',
+                $plugin_tx['fotorama']['message_cant_save'],
+                $service->getGalleryFilename($name)
             );
         }
         if (!$messages) {

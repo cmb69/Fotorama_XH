@@ -31,37 +31,33 @@ class CreateGalleryCommand extends Command
      *
      * @return void
      *
-     * @global array             The paths of system files and folders.
      * @global array             The localization of the plugins.
      * @global string            (X)HTML fragment to insert into the contents area.
      * @global XH_CSRFProtection The CSRF protector.
      */
     public function execute()
     {
-        global $pth, $plugin_tx, $o, $_XH_csrfProtection;
+        global $plugin_tx, $o, $_XH_csrfProtection;
 
         $_XH_csrfProtection->check();
         $messages = '';
         $name = $_POST['fotorama_gallery'];
         $path = $_POST['fotorama_folder'];
-        $filename = $pth['folder']['images'] . $path;
         $xml = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' . PHP_EOL
             . '<!DOCTYPE gallery SYSTEM' . PHP_EOL
             . '        "http://3-magi.net/userfiles/downloads/dtd/gallery.dtd">'
             . PHP_EOL
             . '<gallery path="' . $path . '">' . PHP_EOL;
-        if (is_dir($filename)) {
-            $files = new \DirectoryIterator($filename);
-            foreach ($files as $file) {
-                $filename = $file->getPathname();
-                if (is_file($filename) && getimagesize($filename)) {
-                    $xml .= '    <pic path="' . $file->getFilename(). '"/>'
-                        . PHP_EOL;
-                }
+        $service = new GalleryService();
+        if (!$service->hasImageFolder($path)) {
+            foreach ($service->findImagesIn($path) as $image) {
+                $xml .= '    <pic path="' . $image . '"/>' . PHP_EOL;
             }
         } else {
             $messages .= XH_message(
-                'warning', $plugin_tx['fotorama']['message_no_folder'], $filename
+                'warning',
+                $plugin_tx['fotorama']['message_no_folder'],
+                $service->getImageFoldername($path)
             );
         }
         $xml .= '</gallery>' . PHP_EOL;
@@ -70,14 +66,17 @@ class CreateGalleryCommand extends Command
                 'fail', $plugin_tx['fotorama']['message_invalid_name'], $name
             );
         } else {
-            $filename = $pth['folder']['content'] . 'fotorama/' . $name . '.xml';
-            if (file_exists($filename)) {
+            if ($service->hasGallery($name)) {
                 $messages .= XH_message(
-                    'fail', $plugin_tx['fotorama']['message_exists'], $filename
+                    'fail',
+                    $plugin_tx['fotorama']['message_exists'],
+                    $service->getGalleryFilename($name)
                 );
-            } elseif (!file_put_contents($filename, $xml)) {
+            } elseif (!$service->saveGalleryXML($name, $xml)) {
                 $messages .= XH_message(
-                    'fail', $plugin_tx['fotorama']['message_cant_save'], $filename
+                    'fail',
+                    $plugin_tx['fotorama']['message_cant_save'],
+                    $service->getGalleryFilename($name)
                 );
             }
         }

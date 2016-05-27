@@ -27,26 +27,6 @@ namespace Fotorama;
 abstract class Command
 {
     /**
-     * Returns the path of the content folder. If the folder does not exist, it
-     * is created.
-     *
-     * @return string
-     *
-     * @global array The paths of system files and folders.
-     */
-    protected function findContentFolder()
-    {
-        global $pth;
-
-        $folder = $pth['folder']['content'] . 'fotorama/';
-        if (!file_exists($folder)) {
-            mkdir($folder, 0777);
-            chmod($folder, 0777);
-        }
-        return $folder;
-    }
-
-    /**
      * Sends a relocation header.
      *
      * @param string $url An URL to relocate to.

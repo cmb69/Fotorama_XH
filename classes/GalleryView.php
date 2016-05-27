@@ -54,8 +54,8 @@ class GalleryView
     {
         global $pth;
 
-        $path = $pth['folder']['content'] . 'fotorama/' . $this->name . '.xml';
-        $gallery = simplexml_load_file($path);
+        $service = new GalleryService();
+        $gallery = $service->findGallery($this->name);
         $this->emitJS();
         $html = $this->renderGalleryStartTag($gallery);
         foreach ($gallery->pic as $pic) {
