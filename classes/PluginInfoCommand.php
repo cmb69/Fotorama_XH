@@ -8,7 +8,7 @@
  * @category  CMSimple_XH
  * @package   Fotorama
  * @author    Christoph M. Becker <cmbecker69@gmx.de>
- * @copyright 2015 Christoph M. Becker <http://3-magi.net>
+ * @copyright 2015-2016 Christoph M. Becker <http://3-magi.net>
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link      http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
@@ -47,7 +47,7 @@ class PluginInfoCommand extends Command
             . '<p>Version: ' . FOTORAMA_VERSION . '</p>'
             . '<p>Codeeditor_XH is powered by <a href="http://fotorama.io/">'
             . 'Fotorama</a>.</p>'
-            . '<p>Copyright &copy; 2015 <a href="http://3-magi.net">'
+            . '<p>Copyright &copy; 2015-2016 <a href="http://3-magi.net">'
             . 'Christoph M. Becker</a></p>'
             . '<p class="fotorama_license">This program is free software:'
             . 'you can redistribute it and/or modify'
