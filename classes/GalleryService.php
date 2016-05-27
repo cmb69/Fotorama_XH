@@ -175,10 +175,11 @@ class GalleryService
         global $pth;
 
         $images = array();
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
         $files = new \DirectoryIterator("{$pth['folder']['images']}$path");
         foreach ($files as $file) {
             $filename = $file->getPathname();
-            if (is_file($filename) && getimagesize($filename)) {
+            if (is_file($filename) && $finfo->file($filename) == 'image/jpeg') {
                 $images[] = $file->getFilename();
             }
         }
