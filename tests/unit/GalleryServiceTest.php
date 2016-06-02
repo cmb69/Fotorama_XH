@@ -47,12 +47,18 @@ XML;
     {
         global $pth;
         
-        vfsStreamWrapper::register();
-        vfsStreamWrapper::setRoot(new vfsStreamDirectory('content'));
-        mkdir(vfsStream::url('content/fotorama'));
-        file_put_contents(vfsStream::url('content/fotorama/foo.xml'), self::FOO_XML);
-        touch(vfsStream::url('content/fotorama/bar.xml'));
-        $pth = array('folder' => array('content' => vfsStream::url('content/')));
+        $this->root = vfsStream::setup();
+        $pth = array('folder' => array(
+            'content' => $this->root->url() . '/content/',
+            'images' => $this->root->url() . '/images/'
+        ));
+        mkdir("{$pth['folder']['content']}fotorama", 0777, true);
+        file_put_contents("{$pth['folder']['content']}fotorama/foo.xml", self::FOO_XML);
+        touch("{$pth['folder']['content']}fotorama/bar.xml");
+        mkdir("{$pth['folder']['images']}test", 0777, true);
+        $img = imagecreate(100, 100);
+        imagejpeg($img, "{$pth['folder']['images']}test/foo.jpg");
+        imagejpeg($img, "{$pth['folder']['images']}test/bar.jpg");
     }
     
     /**
@@ -66,6 +72,13 @@ XML;
         $this->assertEquals(array('bar', 'foo'), $service->findAllGalleries());
     }
     
+    public function testHasGallery()
+    {
+        $service = new GalleryService();
+        $this->assertTrue($service->hasGallery('foo'));
+        $this->assertFalse($service->hasGallery('baz'));
+    }
+
     /**
      * Tests that a retrieved gallery is a SimpleXMLElement.
      *
@@ -75,6 +88,49 @@ XML;
     {
         $service = new GalleryService();
         $this->assertInstanceOf('SimpleXMLElement', $service->findGallery('foo'));
+    }
+
+    public function testFindsGalleryXml()
+    {
+        $service = new GalleryService();
+        $this->assertEquals(self::FOO_XML, $service->findGalleryXml('foo'));
+    }
+
+    public function testSavesGalleryXml()
+    {
+        global $pth;
+
+        $service = new GalleryService();
+        $service->saveGalleryXML('bar', self::FOO_XML);
+        $this->assertFileEquals(
+            "{$pth['folder']['content']}fotorama/foo.xml",
+            "{$pth['folder']['content']}fotorama/bar.xml"
+        );
+    }
+
+    public function testFindsAllImageFolders()
+    {
+        $service = new GalleryService();
+        $this->assertEquals(array('test'), $service->findImageFolders());
+    }
+
+    public function _testHasImageFolder()
+    {
+        $service = new GalleryService();
+        $this->assertTrue($service->hasImageFolder('test'));
+        $this->assertFalse($service->hasImageFolder('foo'));
+    }
+
+    public function testFindsAllImages()
+    {
+        $service = new GalleryService();
+        $this->assertEquals(array('bar.jpg', 'foo.jpg'), $service->findImagesIn('test'));
+    }
+
+    public function testImageFolderName()
+    {
+        $service = new GalleryService();
+        $this->assertEquals('vfs://root/images/test', $service->getImageFolderName('test'));
     }
 }
 
