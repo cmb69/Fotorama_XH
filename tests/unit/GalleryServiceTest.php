@@ -19,15 +19,6 @@ use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
 
-/**
- * Testing the gallery services.
- *
- * @category CMSimple_XH
- * @package  Testing
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Fotorama_XH
- */
 class GalleryServiceTest extends \PHPUnit_Framework_TestCase
 {
     const FOO_XML = <<<XML
@@ -37,11 +28,8 @@ class GalleryServiceTest extends \PHPUnit_Framework_TestCase
 <gallery/>
 XML;
 
-    /**
-     * Sets up the test fixture.
-     *
-     * @return void
-     */
+    private $sut;
+
     public function setUp()
     {
         global $pth;
@@ -58,49 +46,35 @@ XML;
         $img = imagecreate(100, 100);
         imagejpeg($img, "{$pth['folder']['images']}test/foo.jpg");
         imagejpeg($img, "{$pth['folder']['images']}test/bar.jpg");
+        $this->sut = new GalleryService();
     }
     
-    /**
-     * Tests that all galleries are found.
-     *
-     * @return void
-     */
     public function testAllGalleriesAreFound()
     {
-        $service = new GalleryService();
-        $this->assertEquals(array('bar', 'foo'), $service->findAllGalleries());
+        $this->assertEquals(array('bar', 'foo'), $this->sut->findAllGalleries());
     }
     
     public function testHasGallery()
     {
-        $service = new GalleryService();
-        $this->assertTrue($service->hasGallery('foo'));
-        $this->assertFalse($service->hasGallery('baz'));
+        $this->assertTrue($this->sut->hasGallery('foo'));
+        $this->assertFalse($this->sut->hasGallery('baz'));
     }
 
-    /**
-     * Tests that a retrieved gallery is a SimpleXMLElement.
-     *
-     * @return void
-     */
     public function testGalleryIsSimpleXMLElement()
     {
-        $service = new GalleryService();
-        $this->assertInstanceOf('SimpleXMLElement', $service->findGallery('foo'));
+        $this->assertInstanceOf('SimpleXMLElement', $this->sut->findGallery('foo'));
     }
 
     public function testFindsGalleryXml()
     {
-        $service = new GalleryService();
-        $this->assertEquals(self::FOO_XML, $service->findGalleryXml('foo'));
+        $this->assertEquals(self::FOO_XML, $this->sut->findGalleryXml('foo'));
     }
 
     public function testSavesGalleryXml()
     {
         global $pth;
 
-        $service = new GalleryService();
-        $service->saveGalleryXML('bar', self::FOO_XML);
+        $this->sut->saveGalleryXML('bar', self::FOO_XML);
         $this->assertFileEquals(
             "{$pth['folder']['content']}fotorama/foo.xml",
             "{$pth['folder']['content']}fotorama/bar.xml"
@@ -109,26 +83,22 @@ XML;
 
     public function testFindsAllImageFolders()
     {
-        $service = new GalleryService();
-        $this->assertEquals(array('test'), $service->findImageFolders());
+        $this->assertEquals(array('test'), $this->sut->findImageFolders());
     }
 
-    public function _testHasImageFolder()
+    public function testHasImageFolder()
     {
-        $service = new GalleryService();
-        $this->assertTrue($service->hasImageFolder('test'));
-        $this->assertFalse($service->hasImageFolder('foo'));
+        $this->assertTrue($this->sut->hasImageFolder('test'));
+        $this->assertFalse($this->sut->hasImageFolder('foo'));
     }
 
     public function testFindsAllImages()
     {
-        $service = new GalleryService();
-        $this->assertEquals(array('bar.jpg', 'foo.jpg'), $service->findImagesIn('test'));
+        $this->assertEquals(array('bar.jpg', 'foo.jpg'), $this->sut->findImagesIn('test'));
     }
 
     public function testImageFolderName()
     {
-        $service = new GalleryService();
-        $this->assertEquals('vfs://root/images/test', $service->getImageFolderName('test'));
+        $this->assertEquals('vfs://root/images/test', $this->sut->getImageFolderName('test'));
     }
 }
