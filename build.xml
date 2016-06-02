@@ -95,6 +95,7 @@
                 <exclude name="build.xml"/>
                 <exclude name="composer.json"/>
                 <exclude name="composer.lock"/>
+                <exclude name="pax_global_header"/>
                 <exclude name="phpcompatinfo.json"/>
             </fileset>
         </move>
