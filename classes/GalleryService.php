@@ -1,34 +1,29 @@
 <?php
 
-/**
- * The gallery services.
- *
- * PHP version 5
- *
- * @category  CMSimple_XH
- * @package   Fotorama
- * @author    Christoph M. Becker <cmbecker69@gmx.de>
- * @copyright 2015-2016 Christoph M. Becker <http://3-magi.net>
- * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link      http://3-magi.net/?CMSimple_XH/Fotorama_XH
- */
+/*
+Copyright 2015-2016 Christoph M. Becker
+
+This file is part of Fotorama_XH.
+
+Fotorama_XH is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Fotorama_XH is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Fotorama_XH.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 namespace Fotorama;
 
-/**
- * The gallery services.
- *
- * @category CMSimple_XH
- * @package  Fotorama
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Fotorama_XH
- */
 class GalleryService
 {
     /**
-     * Finds all galleries.
-     *
      * @return array
      */
     public function findAllGalleries()
@@ -46,10 +41,7 @@ class GalleryService
     }
 
     /**
-     * Returns whether a certain gallery exists.
-     *
-     * @param string $name A name.
-     *
+     * @param string $name
      * @return bool
      */
     public function hasGallery($name)
@@ -58,10 +50,7 @@ class GalleryService
     }
     
     /**
-     * Finds a gallery by name.
-     *
-     * @param string $name A name.
-     *
+     * @param string $name
      * @return \SimpleXMLElement
      */
     public function findGallery($name)
@@ -70,10 +59,7 @@ class GalleryService
     }
 
     /**
-     * Finds a gallery's XML by name.
-     *
-     * @param string $name A name.
-     *
+     * @param string $name
      * @return string
      */
     public function findGalleryXML($name)
@@ -82,11 +68,8 @@ class GalleryService
     }
     
     /**
-     * Saves XML in a gallery file, and returns whether that succeeded.
-     *
-     * @param string $name A name.
-     * @param string $xml  An XML string.
-     *
+     * @param string $name
+     * @param string $xml
      * @return bool
      */
     public function saveGalleryXML($name, $xml)
@@ -98,10 +81,7 @@ class GalleryService
     }
 
     /**
-     * Returns the filename of a gallery file.
-     *
-     * @param string $name A name.
-     *
+     * @param string $name
      * @return string
      */
     public function getGalleryFilename($name)
@@ -112,8 +92,6 @@ class GalleryService
     }
 
     /**
-     * Returns all image folders, alphabetically sorted.
-     *
      * @return string[]
      */
     public function findImageFolders()
@@ -126,10 +104,7 @@ class GalleryService
     }
 
     /**
-     * Returns whether a certain image folder exists.
-     *
      * @param string $path A path inside the image folder.
-     *
      * @return bool
      */
     public function hasImageFolder($path)
@@ -138,11 +113,8 @@ class GalleryService
     }
 
     /**
-     * Returns all image folders under a given folder.
-     *
-     * @param string $path   A path to search in.
-     * @param string $prefix A prefix for the folder names.
-     *
+     * @param string $path
+     * @param string $prefix
      * @return string[]
      */
     protected function findImageFoldersIn($path, $prefix)
@@ -165,10 +137,7 @@ class GalleryService
     }
 
     /**
-     * Returns all images in a folder, alphabetically sorted.
-     *
-     * @param string $path A path inside the image folder to search in.
-     *
+     * @param string $path A path inside the image folder.
      * @return string[]
      */
     public function findImagesIn($path)
@@ -189,10 +158,7 @@ class GalleryService
     }
 
     /**
-     * Returns the foldername.
-     *
      * @param string $path A path inside the image folder.
-     *
      * @return string
      */
     public function getImageFoldername($path)
@@ -207,8 +173,6 @@ class GalleryService
      * is created.
      *
      * @return string
-     *
-     * @global array The paths of system files and folders.
      */
     protected function findContentFolder()
     {
