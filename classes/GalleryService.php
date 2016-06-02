@@ -134,7 +134,7 @@ class GalleryService
      */
     public function hasImageFolder($path)
     {
-        return is_dir($path);
+        return is_dir($this->getImageFoldername($path));
     }
 
     /**

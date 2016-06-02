@@ -49,7 +49,7 @@ class CreateGalleryCommand extends Command
             . PHP_EOL
             . '<gallery path="' . $path . '">' . PHP_EOL;
         $service = new GalleryService();
-        if (!$service->hasImageFolder($path)) {
+        if ($service->hasImageFolder($path)) {
             foreach ($service->findImagesIn($path) as $image) {
                 $xml .= '    <pic path="' . $image . '"/>' . PHP_EOL;
             }
