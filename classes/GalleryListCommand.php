@@ -38,7 +38,6 @@ class GalleryListCommand extends Command
         foreach ($service->findAllGalleries() as $gallery) {
             $html .= '<li><a href="' . XH_hsc($url . $gallery) . '">'
                 . $gallery . '</a></li>';
-            
         }
         $html .= '</ul>'
             . '<form action="' . $sn . '?&amp;fotorama" method="post">'
