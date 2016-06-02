@@ -46,7 +46,8 @@ class SaveGalleryCommand extends Command
         $text = stsl($_POST['fotorama_text']);
         if ($plugin_cf['fotorama']['xml_auto_validate'] && !$this->validate($text)) {
             $messages .= XH_message(
-                'warning', $plugin_tx['fotorama']['message_invalid_xml']
+                'warning',
+                $plugin_tx['fotorama']['message_invalid_xml']
             );
         }
         $service = new GalleryService();
@@ -77,5 +78,3 @@ class SaveGalleryCommand extends Command
         return $doc->loadXML($xml) && $doc->validate();
     }
 }
-
-?>

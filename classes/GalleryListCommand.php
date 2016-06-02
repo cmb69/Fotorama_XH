@@ -95,5 +95,3 @@ class GalleryListCommand extends Command
         return $html;
     }
 }
-
-?>

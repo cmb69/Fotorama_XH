@@ -17,7 +17,7 @@
     </target>
 
     <target name="sniff" description="checks adherence to PEAR CS">
-        <phpcodesniffer standard="PEAR">
+        <phpcodesniffer standard="PSR2">
             <fileset refid="php-sources"/>
             <fileset refid="unit-tests"/>
         </phpcodesniffer>
@@ -34,7 +34,7 @@
     </target>
 
     <target name="unit-tests" description="runs all unit tests">
-        <phpunit bootstrap="classes/required_classes.php"
+        <phpunit bootstrap="tests/unit/bootstrap.php"
                  haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>

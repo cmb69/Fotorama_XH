@@ -57,7 +57,9 @@ class GalleryView
         $service = new GalleryService();
         if (!$service->hasGallery($this->name)) {
             return XH_message(
-                'fail', $plugin_tx['fotorama']['message_no_gallery'], $this->name
+                'fail',
+                $plugin_tx['fotorama']['message_no_gallery'],
+                $this->name
             );
         }
         $gallery = $service->findGallery($this->name);
@@ -133,7 +135,8 @@ class GalleryView
             . $pth['folder']['plugins'] . 'fotorama/lib/fotorama.css"'
         );
         include_jqueryplugin(
-            'fotorama', $pth['folder']['plugins'] . 'fotorama/lib/fotorama.js'
+            'fotorama',
+            $pth['folder']['plugins'] . 'fotorama/lib/fotorama.js'
         );
     }
 
@@ -174,5 +177,3 @@ class GalleryView
         return $thumb;
     }
 }
-
-?>

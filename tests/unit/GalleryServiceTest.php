@@ -13,12 +13,11 @@
  * @link      http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
 
-require_once './vendor/autoload.php';
+namespace Fotorama;
 
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
-use Fotorama\GalleryService;
 
 /**
  * Testing the gallery services.
@@ -29,7 +28,7 @@ use Fotorama\GalleryService;
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Fotorama_XH
  */
-class GalleryServiceTest extends PHPUnit_Framework_TestCase
+class GalleryServiceTest extends \PHPUnit_Framework_TestCase
 {
     const FOO_XML = <<<XML
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -133,5 +132,3 @@ XML;
         $this->assertEquals('vfs://root/images/test', $service->getImageFolderName('test'));
     }
 }
-
-?>

@@ -63,7 +63,9 @@ class CreateGalleryCommand extends Command
         $xml .= '</gallery>' . PHP_EOL;
         if (!$this->isValidName($name)) {
             $messages .= XH_message(
-                'fail', $plugin_tx['fotorama']['message_invalid_name'], $name
+                'fail',
+                $plugin_tx['fotorama']['message_invalid_name'],
+                $name
             );
         } else {
             if ($service->hasGallery($name)) {
@@ -101,5 +103,3 @@ class CreateGalleryCommand extends Command
         return preg_match('/^[a-z0-9-]+$/', $name);
     }
 }
-
-?>

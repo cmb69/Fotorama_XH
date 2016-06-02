@@ -65,7 +65,4 @@ class PluginInfoCommand extends Command
             . ' <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/'
             . '</a>.</p>';
     }
-
 }
-
-?>

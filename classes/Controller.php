@@ -74,14 +74,14 @@ class Controller
 
         $o .= print_plugin_admin('on');
         switch ($admin) {
-        case '':
-            $o .= $this->render(new PluginInfoCommand());
-            break;
-        case 'plugin_main':
-            $this->handleMainAction();
-            break;
-        default:
-            $o .= plugin_admin_common($action, $admin, 'fotorama');
+            case '':
+                $o .= $this->render(new PluginInfoCommand());
+                break;
+            case 'plugin_main':
+                $this->handleMainAction();
+                break;
+            default:
+                $o .= plugin_admin_common($action, $admin, 'fotorama');
         }
     }
 
@@ -95,17 +95,17 @@ class Controller
         global $action, $o;
         
         switch ($action) {
-        case 'create':
-            $this->createGallery();
-            break;
-        case 'edit':
-            $o .= $this->render(new GalleryEditorCommand());
-            break;
-        case 'save':
-            $this->saveGallery();
-            break;
-        default:
-            $o .= $this->render(new GalleryListCommand());
+            case 'create':
+                $this->createGallery();
+                break;
+            case 'edit':
+                $o .= $this->render(new GalleryEditorCommand());
+                break;
+            case 'save':
+                $this->saveGallery();
+                break;
+            default:
+                $o .= $this->render(new GalleryListCommand());
         }
     }
 
@@ -115,7 +115,7 @@ class Controller
      * @param Command $command A command.
      *
      * @return string HTML.
-     */     
+     */
     protected function render(Command $command)
     {
         ob_start();
@@ -144,5 +144,3 @@ class Controller
         $command->execute();
     }
 }
-
-?>

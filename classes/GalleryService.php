@@ -155,7 +155,8 @@ class GalleryService
                 $folders = array_merge(
                     $folders,
                     $this->findImageFoldersIn(
-                        $file->getPathname(), $prefix . $file->getFilename() . '/'
+                        $file->getPathname(),
+                        $prefix . $file->getFilename() . '/'
                     )
                 );
             }
@@ -221,5 +222,3 @@ class GalleryService
         return $folder;
     }
 }
-
-?>

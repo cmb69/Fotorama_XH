@@ -33,5 +33,3 @@ function fotorama($name)
 
 $temp = new Fotorama\Controller();
 $temp->dispatch();
-
-?>

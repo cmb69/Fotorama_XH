@@ -45,7 +45,7 @@ abstract class Command
      * @param Command $command A command.
      *
      * @return string HTML.
-     */     
+     */
     protected function render(Command $command)
     {
         ob_start();
@@ -65,5 +65,3 @@ abstract class Command
         return preg_replace('/[^a-z0-9-]/', '', $name);
     }
 }
-
-?>

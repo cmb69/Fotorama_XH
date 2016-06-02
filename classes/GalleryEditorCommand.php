@@ -60,5 +60,3 @@ class GalleryEditorCommand extends Command
             . '</form>';
     }
 }
-
-?>
