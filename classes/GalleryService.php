@@ -123,17 +123,23 @@ class GalleryService
         $files = new \DirectoryIterator($path);
         foreach ($files as $file) {
             if (!$file->isDot() && $file->isDir()) {
-                $folders[] = $prefix . $file->getFilename();
-                $folders = array_merge(
-                    $folders,
-                    $this->findImageFoldersIn(
-                        $file->getPathname(),
-                        $prefix . $file->getFilename() . '/'
-                    )
-                );
+                $folders = $this->appendTo($folders, $file, $prefix);
             }
         }
         return $folders;
+    }
+
+    /**
+     * @param string $prefix
+     * @return array
+     */
+    private function appendTo(array $folders, \SplFileInfo $file, $prefix)
+    {
+        $folders[] = $prefix . $file->getFilename();
+        return array_merge(
+            $folders,
+            $this->findImageFoldersIn($file->getPathname(), $prefix . $file->getFilename() . '/')
+        );
     }
 
     /**
@@ -145,16 +151,25 @@ class GalleryService
         global $pth;
 
         $images = array();
-        $finfo = new \finfo(FILEINFO_MIME_TYPE);
         $files = new \DirectoryIterator("{$pth['folder']['images']}$path");
         foreach ($files as $file) {
             $filename = $file->getPathname();
-            if (is_file($filename) && $finfo->file($filename) == 'image/jpeg') {
+            if ($this->isImageFile($filename)) {
                 $images[] = $file->getFilename();
             }
         }
         natcasesort($images);
         return array_values($images);
+    }
+
+    /**
+     * @param string $filename
+     * @return bool
+     */
+    private function isImageFile($filename)
+    {
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        return is_file($filename) && $finfo->file($filename) == 'image/jpeg';
     }
 
     /**
