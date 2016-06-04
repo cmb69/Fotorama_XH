@@ -1,3 +1,9 @@
+Version 1.0beta2 - released 2016-06-04
+* fixed bug where new galleries can't be created
+* fixed bug where new galleries did not properly check if the image folder exists
+* fixed bug where preloading was visible on IE 11
+* fixed bug where galleries were sometimes shown as thumbnails
+
 Version 1.0beta1 - released 2016-05-27
 * lifted PHP requirement to 5.3.0
 * added PHP finfo extension requirement
