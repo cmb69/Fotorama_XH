@@ -95,7 +95,8 @@ class Controller
 
     protected function createGallery()
     {
-        (new CreateGalleryCommand())->execute();
+        $command = new CreateGalleryCommand();
+        $command->execute();
     }
 
     protected function saveGallery()
