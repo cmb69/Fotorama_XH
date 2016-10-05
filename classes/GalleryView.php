@@ -29,6 +29,11 @@ class GalleryView
     protected $name;
 
     /**
+     * @var bool
+     */
+    private static $jsEmitted = false;
+
+    /**
      * @param string $name
      */
     public function __construct($name)
@@ -52,7 +57,9 @@ class GalleryView
             );
         }
         $gallery = $service->findGallery($this->name);
-        $this->emitJS();
+        if (!self::$jsEmitted) {
+            $this->emitJS();
+        }
         $html = $this->renderGalleryStartTag($gallery);
         foreach ($gallery->pic as $pic) {
             $caption = XH_hsc(isset($pic['caption']) ? $pic['caption'] : '');
@@ -116,6 +123,7 @@ class GalleryView
             'fotorama',
             $pth['folder']['plugins'] . 'fotorama/lib/fotorama.js'
         );
+        self::$jsEmitted = true;
     }
 
     /**
