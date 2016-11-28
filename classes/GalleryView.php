@@ -61,26 +61,26 @@ class GalleryView
             $this->emitJS();
         }
         $html = $this->renderGalleryStartTag($gallery);
-        foreach ($gallery->pic as $pic) {
-            $caption = XH_hsc(isset($pic['caption']) ? $pic['caption'] : '');
-            $filename = $pth['folder']['images'] . $gallery['path'] . '/'
-                . $pic['path'];
-            if (isset($gallery['nav'])) {
-                $thumbnail = $this->makeThumbnail($filename, 64);
-                $html .= "<a href=\"$filename\" data-caption=\"$caption\">";
-            } else {
-                $thumbnail = $filename;
-            }
-            $html .= tag(
-                'img src="' . $thumbnail . '" data-caption="' . $caption
-                . '" alt="' . $caption . '"'
-            );
-            if (isset($gallery['nav'])) {
-                $html .= '</a>';
-            }
-        }
+        $html .= $this->renderPictures($gallery);
         $html .= '</div>';
         return $html;
+    }
+
+    protected function emitJS()
+    {
+        global $hjs, $pth;
+
+        include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
+        include_jquery();
+        $hjs .= tag(
+            'link rel="stylesheet" type="text/css" href="'
+            . $pth['folder']['plugins'] . 'fotorama/lib/fotorama.css"'
+        );
+        include_jqueryplugin(
+            'fotorama',
+            $pth['folder']['plugins'] . 'fotorama/lib/fotorama.js'
+        );
+        self::$jsEmitted = true;
     }
 
     /**
@@ -109,21 +109,43 @@ class GalleryView
         return $html;
     }
 
-    protected function emitJS()
+    private function renderPictures(\SimpleXMLElement $gallery)
     {
-        global $hjs, $pth;
+        global $pth;
+    
+        $html = '';
+        foreach ($gallery->pic as $pic) {
+            $caption = XH_hsc(isset($pic['caption']) ? $pic['caption'] : '');
+            if ($isAbsoluteUrl = $this->isAbsoluteUrl($pic['path'])) {
+                $filename = $pic['path'];
+            } else {
+                $filename = $pth['folder']['images'] . $gallery['path'] . '/'
+                    . $pic['path'];
+            } 
+            if (isset($gallery['nav'])) {
+                if ($isAbsoluteUrl) {
+                    $thumbnail = "{$pth['folder']['plugins']}fotorama/images/external.jpg";
+                } else {
+                    $thumbnail = $this->makeThumbnail($filename, 64);
+                }
+                $html .= "<a href=\"$filename\" data-caption=\"$caption\">";
+            } else {
+                $thumbnail = $filename;
+            }
+            $html .= tag(
+                'img src="' . $thumbnail . '" data-caption="' . $caption
+                . '" alt="' . $caption . '"'
+            );
+            if (isset($gallery['nav'])) {
+                $html .= '</a>';
+            }
+        }
+        return $html;
+    }
 
-        include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
-        include_jquery();
-        $hjs .= tag(
-            'link rel="stylesheet" type="text/css" href="'
-            . $pth['folder']['plugins'] . 'fotorama/lib/fotorama.css"'
-        );
-        include_jqueryplugin(
-            'fotorama',
-            $pth['folder']['plugins'] . 'fotorama/lib/fotorama.js'
-        );
-        self::$jsEmitted = true;
+    private function isAbsoluteUrl($url)
+    {
+        return strpos($url, '://') !== false;
     }
 
     /**

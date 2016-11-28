@@ -14,6 +14,7 @@
 <p>Fotorama_XH ermöglicht das Einbetten von <a href="http://fotorama.io/">Fotorama</a>
 Galerien auf CMSimple_XH Seiten. Das Plugin bietet keinerlei Bild-Upload-Möglichkeit,
 sondern verwendet statt dessen Bilder aus dem Bilderordner von CMSimple_XH
+oder von irgendwo im World Wide Web
 (bislang wird nur JPEG unterstützt). Jede Galerie kann individuell konfiguriert
 werden, und jedes Bild kann eine zusätzliche Beschriftung erhalten.</p>
 
@@ -25,6 +26,7 @@ werden, und jedes Bild kann eine zusätzliche Beschriftung erhalten.</p>
 <li><a href="#usage">Verwendung</a>
 <ul>
 <li><a href="#usage-preparation">Vorbereiten einer Galerie</a></li>
+<li><a href="#usage-external">Externe Bilder</a></li>
 <li><a href="#usage-embedding">Einbetten einer Galerie</a></li>
 </ul>
 </li>
@@ -145,6 +147,21 @@ In diesem Fall können Sie die automatische Validierung in der Konfiguration
 des Plugins abschalten.</p>
 <div class="toplink"><a href="#">zum Seitenanfang</a></div>
 
+<h3 id="usage-external">Externe Bilder</h3>
+<p>
+    Es ist ebenfalls möglich externe Bilder (d.h. Bilder außerhalb von Ihrem Bilderordner)
+    durch Angabe der vollständig qualifizierten URL des Bildes als path des pic Elements anzuzeigen.
+    Wie in diesem Fall üblich ist zu beachten, dass beispielsweise das Bild nicht verfügbar ist,
+    und unter Umständen rechtliche Einschränkungen gelten. Beachten Sie, dass für externe Bilder
+    keine Thumbnails generiert werden, sondern statt dessen ein Standard-Thumbnail angezeigt wird,
+    das Sie durch Ersetzen von plugins/fotorama/images/external.jpg mit einem Bild Ihrer Wahl ändern
+    können.
+</p>
+<p>
+    Sie können externe Bilder und Bilder im Gallerieordner beliebig mischen.
+</p>
+<div class="toplink"><a href="#">back to top</a></div>
+
 <h3 id="usage-embedding">Einbinden einer Galerie</h3>
 <p>Um eine Galerie auf einer Seite einzubinden, schreiben Sie einfach:</p>
 <pre>{{{PLUGIN:fotorama('%NAME%');}}}</pre>
@@ -169,8 +186,12 @@ verwendet werden.</p>
 Anzeige der Galerien.
 Vielen Dank an Artem Polikarpov, dem Entwickler dieser Bibliothek, für seine
 großartige Arbeit, und für die Veröffentlichung unter MIT-Lizenz.</p>
-<p>Das Pluginlogo wurde von <a href="http://www.everaldo.com/">Everaldo
-Coelho</a> gestaltet. Vielen Dank für die Veröffentlichung unter LGPL.</p>
+<p>
+    Das Pluginlogo wurde von <a href="http://www.everaldo.com/">Everaldo
+    Coelho</a> gestaltet. Vielen Dank für die Veröffentlichung unter LGPL.
+    Das Plugin verwendet ebenfalls Icons aus dem <a href="http://www.oxygen-icons.org/">Oxygen
+    Icon-Set</a>. Vielen Dank für die Veröffentlichung dieses Icon-Sets unter GPL.
+</p>
 <!--<p>This plugin uses free applications icons from <a-->
 <!--href="http://www.aha-soft.com/">Aha-Soft</a>. Many thanks to making these icons-->
 <!--freely available.</p>-->
