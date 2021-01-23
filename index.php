@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with Fotorama_XH.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('FOTORAMA_VERSION', '@FOTORAMA_VERSION@');
+define('FOTORAMA_VERSION', '1.0beta2');
 
  /**
   * @param string $name
