@@ -1,4 +1,4 @@
-*.komodoproject
-.komodotools
-tests/coverage
-vendor
+/cache/*.jpg
+/tests/coverage
+/vendor
+/composer.lock
