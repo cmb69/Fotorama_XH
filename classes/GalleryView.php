@@ -160,8 +160,10 @@ class GalleryView
         $md5 = md5($path);
         $thumb = $pth['folder']['plugins'] . 'fotorama/cache/'
             . "{$md5}_{$size}.jpg";
-        if (!file_exists($thumb) || filemtime($thumb) < filemtime($path)) {
-            $source = imagecreatefromjpeg($path);
+        if (!is_file($thumb) || filemtime($thumb) < filemtime($path)) {
+            if (($source = imagecreatefromjpeg($path)) === false) {
+                return $path;
+            }
             $w1 = imagesx($source);
             $h1 = imagesy($source);
             if ($w1 < $h1) {
@@ -171,9 +173,13 @@ class GalleryView
                 $h2 = $size;
                 $w2 = $h2 / $h1 * $w1;
             }
-            $dest = imagecreatetruecolor($w2, $h2);
+            if (($dest = imagecreatetruecolor($w2, $h2)) === false) {
+                return $path;
+            }
             imagecopyresampled($dest, $source, 0, 0, 0, 0, $w2, $h2, $w1, $h1);
-            imagejpeg($dest, $thumb);
+            if (!imagejpeg($dest, $thumb)) {
+                return $path;
+            }
             imagedestroy($source);
             imagedestroy($dest);
         }
