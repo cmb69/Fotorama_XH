@@ -1,7 +1,7 @@
 <?php
 
 /*
-Copyright 2015-2016 Christoph M. Becker
+Copyright 2015-2021 Christoph M. Becker
 
 This file is part of Fotorama_XH.
 
@@ -39,7 +39,7 @@ class PluginInfoCommand extends Command
             . '<p>Version: ' . FOTORAMA_VERSION . '</p>'
             . '<p>Codeeditor_XH is powered by <a href="http://fotorama.io/">'
             . 'Fotorama</a>.</p>'
-            . '<p>Copyright &copy; 2015-2016 <a href="http://3-magi.net">'
+            . '<p>Copyright &copy; 2015-2021 <a href="http://3-magi.net">'
             . 'Christoph M. Becker</a></p>'
             . '<p class="fotorama_license">This program is free software:'
             . 'you can redistribute it and/or modify'

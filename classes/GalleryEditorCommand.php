@@ -1,7 +1,7 @@
 <?php
 
 /*
-Copyright 2015-2016 Christoph M. Becker
+Copyright 2015-2021 Christoph M. Becker
 
 This file is part of Fotorama_XH.
 
