@@ -50,25 +50,25 @@
     </target>
 
     <target name="build" description="builds a distributable ZIP archive">
-        <fail unless="version" message="version is not defined!"/>
-        <exec command="git archive -o export.tar HEAD" checkreturn="true"/>
-        <untar file="export.tar" todir="export"/>
-        <delete file="export.tar"/>
+        <exec command="git archive -o export.zip HEAD" checkreturn="true"/>
+        <unzip file="export.zip" todir="export"/>
+        <delete file="export.zip"/>
         <move todir="dist">
             <fileset dir="export">
+                <exclude name=".phive/**"/>
                 <exclude name="tests/**"/>
                 <exclude name="build.xml"/>
                 <exclude name="composer.json"/>
                 <exclude name="composer.lock"/>
                 <exclude name="coverage.xml"/>
-                <exclude name="pax_global_header"/>
                 <exclude name="phpcompatinfo.json"/>
+                <exclude name="teplad.xml"/>
             </fileset>
         </move>
         <delete dir="export"/>
         <copy file="dist/config/config.php" tofile="dist/config/defaultconfig.php"/>
         <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
-        <zip destfile="Fotorama_XH-${version}.zip" basedir="dist" prefix="fotorama/"/>
+        <zip destfile="Fotorama_XH-1.0beta2.zip" basedir="dist" prefix="fotorama/"/>
         <delete dir="dist"/>
     </target>
 
