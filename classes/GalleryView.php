@@ -46,7 +46,7 @@ class GalleryView
      */
     public function render()
     {
-        global $pth, $plugin_tx;
+        global $plugin_tx;
 
         $service = new GalleryService();
         if (!$service->hasGallery($this->name)) {
