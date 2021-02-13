@@ -121,7 +121,7 @@ class GalleryView
             } else {
                 $filename = $pth['folder']['images'] . $gallery['path'] . '/'
                     . $pic['path'];
-            } 
+            }
             if (isset($gallery['nav'])) {
                 if ($isAbsoluteUrl) {
                     $thumbnail = "{$pth['folder']['plugins']}fotorama/images/external.jpg";
