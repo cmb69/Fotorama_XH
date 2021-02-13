@@ -20,4 +20,4 @@ along with Fotorama_XH.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 require_once './vendor/autoload.php';
-require_once './classes/required_classes.php';
+require_once './classes/GalleryService.php';

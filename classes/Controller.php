@@ -25,10 +25,8 @@ class Controller
 {
     public function dispatch()
     {
-        if (defined('XH_ADM') && XH_ADM) {
-            if (function_exists('XH_registerStandardPluginMenuItems')) {
-                XH_registerStandardPluginMenuItems(true);
-            }
+        if (XH_ADM) {
+            XH_registerStandardPluginMenuItems(true);
             if ($this->isAdministrationRequested()) {
                 $this->handleAdministration();
             }
@@ -40,11 +38,7 @@ class Controller
      */
     protected function isAdministrationRequested()
     {
-        global $fotorama;
-
-        return function_exists('XH_wantsPluginAdministration')
-            && XH_wantsPluginAdministration('fotorama')
-            || isset($fotorama) && $fotorama == 'true';
+        return XH_wantsPluginAdministration('fotorama');
     }
 
     protected function handleAdministration()
