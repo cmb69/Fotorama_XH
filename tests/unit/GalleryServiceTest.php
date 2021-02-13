@@ -21,11 +21,13 @@ along with Fotorama_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Fotorama;
 
+use PHPUnit\Framework\TestCase;
+
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
 
-class GalleryServiceTest extends \PHPUnit_Framework_TestCase
+class GalleryServiceTest extends TestCase
 {
     const FOO_XML = <<<XML
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -36,7 +38,7 @@ XML;
 
     private $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         global $pth;
         
