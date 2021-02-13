@@ -1,4 +1,5 @@
 /cache/*.jpg
 /tests/coverage
 /vendor
+/tools
 /composer.lock
