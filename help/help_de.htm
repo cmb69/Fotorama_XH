@@ -1,213 +1,101 @@
 <!DOCTYPE html>
-<html lang="de">
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
 <head>
-<meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>Fotorama_XH - Handbuch</title>
-<link rel="stylesheet" type="text/css" href="./stylesheet.css">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Fotorama_XH – Benutzerhandbuch</title>
+  <style type="text/css">
+    body {
+        font-family: Georgia, serif;
+        line-height: 1.5;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        background: #ffffe1;
+        max-width: 40em;
+    }
+    p {
+        text-align: justify;
+    }
+    pre {
+        color: black;
+        background: #ffe;
+        overflow: auto;
+        padding: 0.2em 0.5em;
+        border: 1px solid silver;
+    }
+  </style>
 </head>
-
 <body>
-
-<h1>Fotorama_XH - ein CMSimple_XH Plugin</h1>
-<img src="../fotorama.png" style="float:left; margin-right:16px" alt="Bilderordner">
-<p>Fotorama_XH ermöglicht das Einbetten von <a href="http://fotorama.io/">Fotorama</a>
-Galerien auf CMSimple_XH Seiten. Das Plugin bietet keinerlei Bild-Upload-Möglichkeit,
-sondern verwendet statt dessen Bilder aus dem Bilderordner von CMSimple_XH
-oder von irgendwo im World Wide Web
-(bislang wird nur JPEG unterstützt). Jede Galerie kann individuell konfiguriert
-werden, und jedes Bild kann eine zusätzliche Beschriftung erhalten.</p>
-
-<ul id="nav">
-<li><a href="#notice">Wichtiger Hinweis</a></li>
-<li><a href="#requirements">Voraussetzungen</a></li>
-<li><a href="#installation">Installation</aEinstellungen/li>
-<li><a href="#settings">Einstellungen</aVerwendung/li>
-<li><a href="#usage">Verwendung</a>
+<h1 id="fotorama_xh">Fotorama_XH</h1>
+<p>Fotorama_XH ermöglicht das Einbetten von <a href="https://fotorama.io/">Fotorama</a> Galerien auf CMSimple_XH Seiten. Das Plugin bietet keinerlei Bild-Upload-Möglichkeit, sondern verwendet statt dessen Bilder aus dem Bilderordner von CMSimple_XH oder von irgendwo im World Wide Web (bislang wird nur JPEG unterstützt). Jede Galerie kann individuell konfiguriert werden, und jedes Bild kann eine zusätzliche Beschriftung erhalten.</p>
 <ul>
-<li><a href="#usage-preparation">Vorbereiten einer Galerie</a></li>
-<li><a href="#usage-external">Externe Bilder</a></li>
-<li><a href="#usage-embedding">Einbetten einer Galerie</a></li>
+<li><a href="#voraussetzungen">Voraussetzungen</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#einstellungen">Einstellungen</a></li>
+<li><a href="#verwendung">Verwendung</a>
+<ul>
+<li><a href="#vorbereiten-einer-galerie">Vorbereiten einer Galerie</a></li>
+<li><a href="#externe-bilder">Externe Bilder</a></li>
+<li><a href="#einbetten-einer-galerie">Einbetten einer Galerie</a></li>
+</ul></li>
+<li><a href="#einschränkungen">Einschränkungen</a></li>
+<li><a href="#fehlerbehebung">Fehlerbehebung</a></li>
+<li><a href="#lizenz">Lizenz</a></li>
+<li><a href="#danksagung">Danksagung</a></li>
 </ul>
-</li>
-<li><a href="#limitations">Beschränkungen</a></li>
-<li><a href="#license">Lizenz</a></li>
-<li><a href="#credits">Danksagung</a></li>
-</ul>
-
-<div id="body">
-
-<p><strong>Bitte lesen Sie diese Dokumentation <em>bevor</em> Sie auf Probleme
-stoßen!</strong></p>
-
-<h2 id="notice">Wichtiger Hinweis</h2>
-<p><strong>Fotorama_XH wurde bislang noch nicht in diversen Umgebungen getestet.
-Es ist eine so genannte Beta-Version.
-Vorsicht bei der Verwendung!</strong></p>
-<div class="toplink"><a href="#">zum Seitenanfang</a></div>
-
-<h2 id="requirements">Voraussetzungen</h2>
-<p>Fotorama_XH ist ein Plugin für CMSimple_XH &ge; 1.7.0.
-Es benötigt PHP &ge; 5.3.0 und die "fileinfo", "gd" und "SimpleXML" Extensions.</p>
-<div class="toplink"><a href="#">zum Seitenanfang</a></div>
-
+<h2 id="voraussetzungen">Voraussetzungen</h2>
+<p>Fotorama_XH ist ein Plugin für CMSimple_XH ≥ 1.7.0. Es benötigt PHP ≥ 5.3.0 mit den fileinfo, gd und simplexml Extensions.</p>
+<h2 id="download">Download</h2>
+<p>Das <a href="https://github.com/cmb69/fotorama_xh/releases/latest">aktuelle Release</a> kann von Github herunter geladen werden.</p>
 <h2 id="installation">Installation</h2>
-<p>Die Installation erfolgt wie bei vielen anderen CMSimple_XH-Plugins auch. Im
-<a href="http://www.cmsimple-xh.org/wiki/doku.php/de:installation">
-CMSimple_XH-Wiki</a> finden Sie weitere Details.</p>
-<ol>
+<p>Die Installation erfolgt wie bei vielen anderen CMSimple_XH-Plugins auch.</p>
+<ol type="1">
 <li>Sichern Sie die Daten auf Ihrem Server.</li>
 <li>Entpacken Sie die ZIP-Datei auf Ihrem Rechner.</li>
-<li>Laden Sie das ganze Verzeichnis fotorama/ auf Ihren Server in CMSimple_XHs
-Plugin-Verzeichnis hoch.</li>
-<li>Machen Sie die Unterverzeichnisse cache/, config/, css/ und languages/
-beschreibbar.</li>
-<!--<li>Gehen Sie zu Plugins &rarr; Onepage im Administrationsbereich,
-um zu prüfen, ob alle Voraussetzungen erfüllt sind.</li>-->
+<li>Laden Sie das ganze Verzeichnis <code>fotorama/</code> auf Ihren Server in das Plugin-Verzeichnis von CMSimple_XH hoch.</li>
+<li>Vergeben Sie falls nötig Schreibrechte für die Unterverzeichnisse <code>cache/</code>, <code>config/</code>, <code>css/</code> und <code>languages/</code>.</li>
 </ol>
-<div class="toplink"><a href="#">zum Seitenanfang</a></div>
-
-<h2 id="settings">Einstellungen</h2>
-<p>Die Plugin-Konfiguration erfolgt wie bei vielen anderen CMSimple_XH-Plugins
-auch im Administrationsbereich der Website. Wählen Sie
-Plugins &rarr; Fotorama.</p>
-<p>Sie können die Voreinstellungen von Fotorama_XH unter "Konfiguration"
-ändern. Hinweise zu den Optionen werden beim Überfahren der Hilfe-Icons mit der
-Maus angezeigt.</p>
-<p>Die Lokalisierung wird unter "Sprache" vorgenommen. Sie können die
-Sprachtexte in Ihre eigene Sprache übersetzen,
-falls keine entsprechende Sprachdatei zur Verfügung steht,
-oder diese Ihren Wünschen gemäß anpassen.</p>
-<p>Das Aussehen von Fotorama_XH kann unter "Stylesheet" angepasst werden.</p>
-<div class="toplink"><a href="#">zum Seitenanfang</a></div>
-<h2 id="usage">Verwendung</h2>
-
-<h3 id="usage-preparation">Vorbereiten einer Galerie</h3>
-<p>Zunächst müssen Sie einige Bilder in einen Unterordner des Bilderordners
-von CMSimple_XH hoch laden. Sie können entweder den Dateibrowser von CMSimple_XH
-oder Ihren bevorzugten FTP-Client verwenden.
-Dann müssen Sie die XML-Datei mit der Galerie-Definition im Backend erstellen.
-Navigieren Sie zu Plugins &rarr; Fotorama &rarr; Galerien, und verwenden Sie
-das Formular um eine erste XML-Datei mit allen Bildern des gewählten Ordners zu
-erstellen. Der Name der Galerie darf nur römische Kleinbuchstaben (a-z),
-arabische Ziffern (0-9) und Bindestriche (-) enthalten. Der Name der Galerie
-wird als Dateiname verwendet (wobei .xml angehängt wird), und die Datei wird im
-content/ Ordner von CMSimple_XH gespeichert.
-Jede Sprache hat ihren eigenen Satz von Galerie-Definitionsdateien, so dass Sie
-die Bildbeschriftungen übersetzen können.</p>
-<p>Nachdem die XML-Datei erfolgreich erstellt wurde, werden Sie zum Galerie-Editor
-weiter geleitet, wo Sie die Feinabstimmung der Galerie vornehmen können, indem
-Sie die XML-Datei bearbeiten. Sie können &lt;pic&gt; Elemente entfernen und
-hinzufügen, und deren Reihenfolge verändern. Jedem &lt;pic&gt; Element kann
-optional ein caption (Beschriftung) Attribut ergänzt werden, dessen Wert in der
-Galerie angezeigt wird; die Beschriftung wird ebenfalls als alt Attribut des
-HTML &lt;img&gt; verwendet.
-Sie können den Wert des path (Pfad) Attributs ändern,
-aber Sie dürfen das Attribut nicht komplett entfernen.
-Beachten Sie, dass Sie die ersten drei Zeilen der Datei (die XML- und die
-Doctype-Deklaration) nicht ändern sollten.
-<p>Weiterhin können Sie dem &lt;gallery&gt; Element zusätzliche Attribute
-(das path Attribute ist auf jeden Fall erforderlich) geben,
-die die Funktionalität und das Aussehen der Galerie beeinflussen.
-Folgende Attribute werden unterstützt:</p>
-<dl>
-<dt>width und ratio</dt>
-<dd>Diese Attribute geben die Breite bzw. das Seitenverhältnis der Galerie an.
-Die Breite ist entweder eine einfache Zahl, die die Breite in Pixeln angibt
-(z.B. "400"), oder ein Prozentsatz des verfügbaren horizontalen Platzes
-(z.B. "100%"), was besonders nützlich für responsive Layouts ist.
-Das Seitenverhältnis ist entweder ein Bruch (z.B. 400/300 oder 16/9)
-oder eine Dezimalzahl (z.B. 1,3333).
-Werden diese Attribute ausgelassen, dann werden Breite und Seitenverhältnis
-durch das erste Bild bestimmt.
-Beachten Sie, dass die Größe der Bilder angepasst wird,
-so dass diese zu Breite/Seitenverhältnis passen,
-damit es möglich ist, Bilder im Hoch- und Querformat in der selben Galerie
-ohne Verzerrung zu mischen.</dd>
-<dt>nav</dt>
-<dd>Nur "thumbs" (Vorschaubild) ist erlaubt, wenn dieses Attribut angegeben wird.
-Das erweitert die schmale "dot" Navigation zu einer Vorschaubild-Navigation.
-Die erforderlichen Vorschaubilder werden bei Bedarf automatisch erzeugt,
-und im cache/ Ordner des Plugins gespeichert.</dd>
-<dt>fullscreen</dt>
-<dd>Dies erlaubt dem Besucher in die Vollbildansicht zu wechseln.
-Wählen Sie entweder "true", was die Vollbildansicht auf das Browserfenster
-beschränkt,
-oder "native", was den gesamten Bildschirm verwendet,
-wenn vom Browser unterstützt.</dd>
-<dt>transition</dt>
-<dd>Entweder "slide" (die Voreinstellung, wenn das Attribut ausgelassen wird),
-"crossfade" oder "dissolve". Letzteres ist vermutlich nur dann sinnvoll,
-wenn Sie Bilder haben, die sich nur leicht unterscheiden;
-ansonsten ist "crossfade" vorzuziehen.</dd>
-</dl>
-<p>Wird die Datei gespeichert, wird sie automatisch gegen die DTD validiert.
-Das funktioniert nicht, wenn Sie offline arbeiten.
-In diesem Fall können Sie die automatische Validierung in der Konfiguration
-des Plugins abschalten.</p>
-<div class="toplink"><a href="#">zum Seitenanfang</a></div>
-
-<h3 id="usage-external">Externe Bilder</h3>
-<p>
-    Es ist ebenfalls möglich externe Bilder (d.h. Bilder außerhalb von Ihrem Bilderordner)
-    durch Angabe der vollständig qualifizierten URL des Bildes als path des pic Elements anzuzeigen.
-    Wie in diesem Fall üblich ist zu beachten, dass beispielsweise das Bild nicht verfügbar ist,
-    und unter Umständen rechtliche Einschränkungen gelten. Beachten Sie, dass für externe Bilder
-    keine Thumbnails generiert werden, sondern statt dessen ein Standard-Thumbnail angezeigt wird,
-    das Sie durch Ersetzen von plugins/fotorama/images/external.jpg mit einem Bild Ihrer Wahl ändern
-    können.
-</p>
-<p>
-    Sie können externe Bilder und Bilder im Gallerieordner beliebig mischen.
-</p>
-<div class="toplink"><a href="#">back to top</a></div>
-
-<h3 id="usage-embedding">Einbinden einer Galerie</h3>
+<h2 id="einstellungen">Einstellungen</h2>
+<p>Die Plugin-Konfiguration erfolgt wie bei vielen anderen CMSimple_XH-Plugins auch im Administrationsbereich der Website. Gehen Sie zu <code>Plugins</code> → <code>Fotorama</code>.</p>
+<p>Sie können die Voreinstellungen von Fotorama_XH unter <code>Konfiguration</code> ändern. Beim Überfahren der Hilfe-Icons mit der Maus werden Hinweise zu den Einstellungen angezeigt.</p>
+<p>Die Lokalisierung wird unter <code>Sprache</code> vorgenommen. Sie können die Sprachtexte in Ihre eigene Sprache übersetzen, falls keine entsprechende Sprachdatei zur Verfügung steht, oder diese Ihren Wünschen gemäß anpassen.</p>
+<p>Das Aussehen von Fotorama_XH kann unter <code>Stylesheet</code> angepasst werden.</p>
+<h2 id="verwendung">Verwendung</h2>
+<h3 id="vorbereiten-einer-galerie">Vorbereiten einer Galerie</h3>
+<p>Zunächst müssen Sie einige Bilder in einen Unterordner des Bilderordners von CMSimple_XH hoch laden. Sie können entweder den Dateibrowser von CMSimple_XH oder Ihren bevorzugten FTP-Client verwenden. Dann müssen Sie die XML-Datei mit der Galerie-Definition im Backend erstellen. Navigieren Sie zu <code>Plugins</code> → <code>Fotorama</code> → <code>Galerien</code>, und verwenden Sie das Formular um eine erste XML-Datei mit allen Bildern des gewählten Ordners zu erstellen. Der Name der Galerie darf nur römische Kleinbuchstaben (<code>a</code>-<code>z</code>), arabische Ziffern (<code>0</code>-<code>9</code>) und Bindestriche (<code>-</code>) enthalten. Der Name der Galerie wird als Dateiname verwendet (wobei <code>.xml</code> angehängt wird), und die Datei wird im <code>content/</code> Ordner von CMSimple_XH gespeichert. Jede Sprache hat ihren eigenen Satz von Galerie-Definitionsdateien, so dass Sie die Bildbeschriftungen übersetzen können.</p>
+<p>Nachdem die XML-Datei erfolgreich erstellt wurde, werden Sie zum Galerie-Editor weiter geleitet, wo Sie die Feinabstimmung der Galerie vornehmen können, indem Sie die XML-Datei bearbeiten. Sie können <code>pic</code> Elemente entfernen und hinzufügen, und deren Reihenfolge verändern. Jedem <code>pic</code> Element kann optional ein <code>caption</code> Attribut (Beschriftung) hinzugefügt werden, dessen Wert in der Galerie angezeigt wird; die Beschriftung wird ebenfalls als <code>alt</code> Attribut des HTML <code>&lt;img&gt;</code> verwendet. Sie können den Wert des <code>path</code> Attributs (Pfad) ändern, aber Sie dürfen das Attribut nicht komplett entfernen. Beachten Sie, dass Sie die ersten drei Zeilen der Datei (die XML- und die Doctype-Deklaration) nicht ändern sollten.</p>
+<p>Weiterhin können Sie dem <code>&lt;gallery&gt;</code> Element (Galerie) zusätzliche Attribute (das <code>path</code> Attribute ist auf jeden Fall erforderlich) geben, die die Funktionalität und das Aussehen der Galerie beeinflussen. Folgende Attribute werden unterstützt:</p>
+<ul>
+<li><code>width</code> und <code>ratio</code>: Diese Attribute geben die Breite bzw. das Seitenverhältnis der Galerie an. Die Breite ist entweder eine einfache Zahl, die die Breite in Pixeln angibt (z.B. <code>400</code>), oder ein Prozentsatz des verfügbaren horizontalen Platzes (z.B. <code>100%</code>), was besonders nützlich für responsive Layouts ist. Das Seitenverhältnis ist entweder ein Bruch (z.B. <code>400/300</code> oder <code>16/9</code>) oder eine Dezimalzahl (z.B. <code>1,3333</code>). Werden diese Attribute ausgelassen, dann werden Breite und Seitenverhältnis durch das erste Bild bestimmt. Beachten Sie, dass die Größe der Bilder angepasst wird, so dass diese zu Breite/Seitenverhältnis passen, damit es möglich ist, Bilder im Hoch- und Querformat in der selben Galerie ohne Verzerrung zu mischen.</li>
+<li><code>nav</code>: Nur <code>thumbs</code> (Vorschaubild) ist erlaubt, wenn dieses Attribut angegeben wird. Das erweitert die Punkt-Navigation zu einer Vorschaubild-Navigation. Die erforderlichen Vorschaubilder werden bei Bedarf automatisch erzeugt, und im <code>cache/</code> Ordner des Plugins gespeichert.</li>
+<li><code>fullscreen</code>: Dies erlaubt dem Besucher in die Vollbildansicht zu wechseln. Wählen Sie entweder <code>true</code>, was die Vollbildansicht auf das Browserfenster beschränkt, aber auch in älteren Browsern funktioniert, oder <code>native</code>, was den gesamten Bildschirm verwendet, wenn vom Browser unterstützt.</li>
+<li><code>transition</code>: Entweder <code>slide</code> (die Voreinstellung, wenn das Attribut ausgelassen wird), <code>crossfade</code> oder <code>dissolve</code>. Letzteres ist vermutlich nur dann sinnvoll, wenn Sie Bilder haben, die sich nur leicht unterscheiden; ansonsten ist <code>crossfade</code> vorzuziehen.</li>
+</ul>
+<p>Wird die Datei gespeichert, wird sie automatisch gegen die DTD validiert. Das funktioniert nicht, wenn Sie offline arbeiten. In diesem Fall können Sie die automatische Validierung in der Konfiguration des Plugins deaktivieren.</p>
+<h3 id="externe-bilder">Externe Bilder</h3>
+<p>Es ist ebenfalls möglich externe Bilder (d.h. Bilder außerhalb von Ihrem Bilderordner) durch Angabe der vollständig qualifizierten URL des Bildes als <code>path</code> des <code>&lt;pic&gt;</code> Elements anzuzeigen. Wie in diesem Fall üblich ist zu beachten, dass beispielsweise das Bild nicht verfügbar ist, und unter Umständen rechtliche Einschränkungen gelten. Beachten Sie, dass für externe Bilder keine Vorschaubilder generiert werden, sondern statt dessen ein Standard-Vorschaubild angezeigt wird, das Sie durch Ersetzen von <code>plugins/fotorama/images/external.jpg</code> mit einem Bild Ihrer Wahl ändern können.</p>
+<p>Sie können externe Bilder und Bilder im Gallerieordner beliebig mischen.</p>
+<h3 id="einbetten-einer-galerie">Einbetten einer Galerie</h3>
 <p>Um eine Galerie auf einer Seite einzubinden, schreiben Sie einfach:</p>
-<pre>{{{PLUGIN:fotorama('%NAME%');}}}</pre>
-<p>wobei %NAME% der Name der Galerie ist, z.B.</p>
-<pre>{{{PLUGIN:fotorama('urlaub');}}}</pre>
-<div class="toplink"><a href="#">zum Seitenanfang</a></div>
-
-<h2 id="limitations">Beschränkungen</h2>
-<p>Damit die Galerien <em>voll</em> funktionstüchtig sind,
-muss JavaScript im Browser des Besuchers aktiviert sein.</p>
-<div class="toplink"><a href="#">zum Seitenanfang</a></div>
-
-<h2 id="license">License</h2>
-<p>Fotorama_XH kann unter Einhaltung der
-<a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>
-verwendet werden.</p>
-<p>&copy; 2015-2021 Christoph M. Becker</p>
-<div class="toplink"><a href="#">zum Seitenanfang</a></div>
-
-<h2 id="credits">Credits</h2>
-<p>Diese Plugin verwendet <a href="http://fotorama.io/">Fotorama</a> zur
-Anzeige der Galerien.
-Vielen Dank an Artem Polikarpov, dem Entwickler dieser Bibliothek, für seine
-großartige Arbeit, und für die Veröffentlichung unter MIT-Lizenz.</p>
-<p>
-    Das Pluginlogo wurde von <a href="http://www.everaldo.com/">Everaldo
-    Coelho</a> gestaltet. Vielen Dank für die Veröffentlichung unter LGPL.
-    Das Plugin verwendet ebenfalls Icons aus dem <a href="http://www.oxygen-icons.org/">Oxygen
-    Icon-Set</a>. Vielen Dank für die Veröffentlichung dieses Icon-Sets unter GPL.
-</p>
-<!--<p>This plugin uses free applications icons from <a-->
-<!--href="http://www.aha-soft.com/">Aha-Soft</a>. Many thanks to making these icons-->
-<!--freely available.</p>-->
-<p>Vielen Dank an die Community im <a
-href="http://www.cmsimpleforum.com/">CMSimple_XH forum</a> für Hinweise,
-Anregungen und das Testen.
-Besonders möchte ich Traktorist für das frühe und wertvolle Feedback zur
-ersten Beta-Version danken.</p>
-<p>Und zu guter letzt vielen Dank an <a href="http://www.harteg.dk/">Peter
-Harteg</a>, den "Vater" von CMSimple, und allen Entwicklern von <a
-href="http://www.cmsimple-xh.org/de/">CMSimple_XH</a> ohne die es dieses
-phantastische CMS nicht gäbe.</p>
-<div class="toplink"><a href="#">zum Seitenanfang</a></div>
-
-</div>
-
+<pre><code>{{{fotorama(&#39;%NAME%&#39;)}}}</code></pre>
+<p>wobei <code>%NAME%</code> der Name der Galerie ist, z.B.</p>
+<pre><code>{{{fotorama(&#39;urlaub&#39;)}}}</code></pre>
+<h2 id="einschränkungen">Einschränkungen</h2>
+<p>Damit die Galerien <em>voll</em> funktionstüchtig sind, muss JavaScript im Browser des Besuchers aktiviert sein.</p>
+<h2 id="fehlerbehebung">Fehlerbehebung</h2>
+<p>Melden Sie Programmfehler und stellen Sie Supportanfragen entweder auf <a href="https://github.com/cmb69/fotorama_xh/issues">Github</a> oder im <a href="https://cmsimpleforum.com/">CMSimple_XH Forum</a>.</p>
+<h2 id="lizenz">Lizenz</h2>
+<p>Fotorama_XH ist freie Software. Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß Version 3 der Lizenz oder (nach Ihrer Option) jeder späteren Version.</p>
+<p>Die Veröffentlichung von Fotorama_XH erfolgt in der Hoffnung, daß es Ihnen von Nutzen sein wird, aber <em>ohne irgendeine Garantie</em>, sogar ohne die implizite Garantie der <em>Marktreife</em> oder der <em>Verwendbarkeit für einen bestimmten Zweck</em>. Details finden Sie in der GNU General Public License.</p>
+<p>Sie sollten ein Exemplar der GNU General Public License zusammen mit Fotorama_XH erhalten haben. Falls nicht, siehe <a href="https://www.gnu.org/licenses/" class="uri">https://www.gnu.org/licenses/</a>.</p>
+<p>Copyright 2015-2021 Christoph M. Becker</p>
+<h2 id="danksagung">Danksagung</h2>
+<p>Dieses Plugin verwendet <a href="https://fotorama.io/">Fotorama</a> zur Anzeige der Galerien. Vielen Dank an Artem Polikarpov, dem Entwickler dieser Bibliothek, für seine großartige Arbeit, und für die Veröffentlichung unter MIT-Lizenz.</p>
+<p>Das Pluginlogo wurde von <a href="https://www.everaldo.com/">Everaldo Coelho</a> gestaltet. Vielen Dank für die Veröffentlichung unter LGPL. Das Plugin verwendet ebenfalls Icons aus dem <a href="http://www.oxygen-icons.org/">Oxygen Icon-Set</a>. Vielen Dank für die Veröffentlichung dieses Icon-Sets unter GPL.</p>
+<p>Vielen Dank an die Community im <a href="https://www.cmsimpleforum.com/">CMSimple_XH Forum</a> für Hinweise, Anregungen und das Testen. Besonders möchte ich <em>Traktorist</em> für das frühe und wertvolle Feedback zur ersten Beta-Version danken.</p>
+<p>Und zu guter letzt vielen Dank an <a href="https://www.harteg.dk/">Peter Harteg</a>, den „Vater“ von CMSimple, und allen Entwicklern von <a href="https://www.cmsimple-xh.org/de/">CMSimple_XH</a> ohne die es dieses phantastische CMS nicht gäbe.</p>
 </body>
-
 </html>
