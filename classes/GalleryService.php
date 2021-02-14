@@ -46,7 +46,7 @@ class GalleryService
      */
     public function hasGallery($name)
     {
-        return file_exists($this->getGalleryFilename($name));
+        return is_file($this->getGalleryFilename($name));
     }
     
     /**
@@ -194,7 +194,7 @@ class GalleryService
         global $pth;
 
         $folder = $pth['folder']['content'] . 'fotorama/';
-        if (!file_exists($folder)) {
+        if (!is_dir($folder)) {
             mkdir($folder, 0777);
             chmod($folder, 0777);
         }
